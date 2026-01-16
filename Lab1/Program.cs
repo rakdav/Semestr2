@@ -43,7 +43,7 @@ class Rectangle : Figure
 
     public override string? ToString()
     {
-        return $"Прямоугольник длиной {width} и шириной {width} имеет площадь " +
+        return $"Прямоугольник длиной {height} и шириной {width} имеет площадь " +
             $"{getArea():F2} и периметр {getPerimetr():F2}";
     }
 }
