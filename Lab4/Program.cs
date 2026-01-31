@@ -260,7 +260,7 @@ class RaiwayStation<T>
     {
         for (int i = 0; i < trains.Length; i++)
         {
-            if (trains[i].Time>time) Console.WriteLine(trains);
+            if (trains[i].Time>time) Console.WriteLine(trains[i]);
         }
     }
 }
