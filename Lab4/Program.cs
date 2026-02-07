@@ -226,6 +226,8 @@
 //{
 //    public UniversalPerson(T id) : base(id) { }
 //}
+using System.Collections;
+
 Console.Write("Введите количество поездов:");
 int n=int.Parse(Console.ReadLine()!);
 Train<int>[] trains=new Train<int>[n];
@@ -258,10 +260,11 @@ class RaiwayStation<T>
     }
     public void TrainsByTime(TimeOnly time)
     {
-        for (int i = 0; i < trains.Length; i++)
-        {
-            if (trains[i].Time>time) Console.WriteLine(trains[i]);
-        }
+        //for (int i = 0; i < trains.Length; i++)
+        //{
+        //    if (trains[i].Time>time) Console.WriteLine(trains[i]);
+        //}
+        
     }
 }
 class Train<T>:ICloneable,IComparable
@@ -306,4 +309,39 @@ class TrainCompareByTimeInt : IComparer<Train<int>>
             throw new ArgumentException("Некорректные значения");
         return x.Time!.CompareTo(y.Time);
     }
+}
+
+class RailwayStatiobEnumerator : IEnumerator<int>
+{
+    private Train<int>[] trains;
+    int position=-1;
+    public RailwayStatiobEnumerator(Train<int>[] trains)
+    {
+        this.trains = trains;
+    }
+    public object Current
+    {
+        get
+        {
+            if (position == -1 || position >= trains.Length)
+                throw new ArgumentException();
+            return trains[position];
+        }
+    }
+    int IEnumerator<int>.Current => throw new NotImplementedException();
+    public void Dispose()
+    {
+        throw new NotImplementedException();
+    }
+    public bool MoveNext()
+    {
+        if(position <= trains.Length - 1)
+        {
+            position++;
+            return true;
+        }
+        else
+            return false;
+    }
+    public void Reset()=>position = -1;
 }
