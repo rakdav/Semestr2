@@ -311,37 +311,49 @@ class TrainCompareByTimeInt : IComparer<Train<int>>
     }
 }
 
-class RailwayStatiobEnumerator : IEnumerator<int>
+class RailwayStationEnumerator<T> : IEnumerator<Train<T>>
 {
-    private Train<int>[] trains;
-    int position=-1;
-    public RailwayStatiobEnumerator(Train<int>[] trains)
+    private Train<T>[] trains;
+    private int position=-1;
+    private Train<T> current;
+    public RailwayStationEnumerator(Train<T>[] _trains)
     {
-        this.trains = trains;
+        this.trains =_trains;
+        current=default(Train<T>);
     }
-    public object Current
+
+    public Train<T> Current
     {
-        get
+        get 
         {
-            if (position == -1 || position >= trains.Length)
-                throw new ArgumentException();
-            return trains[position];
+            if (position < 0 || position > trains.Length)
+                throw new InvalidOperationException();
+            return current;
         }
     }
-    int IEnumerator<int>.Current => throw new NotImplementedException();
+
+    object IEnumerator.Current => Current;
+
     public void Dispose()
     {
         throw new NotImplementedException();
     }
+
     public bool MoveNext()
     {
-        if(position <= trains.Length - 1)
+        position++;
+        if (position <= trains.Length)
         {
-            position++;
+            current = trains[position];
             return true;
         }
-        else
-            return false;
+        current = default(Train<T>);
+        return false;
     }
-    public void Reset()=>position = -1;
+
+    public void Reset()
+    {
+        position = -1;
+        current = default(Train<T>);
+    }
 }
