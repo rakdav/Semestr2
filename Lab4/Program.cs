@@ -251,22 +251,72 @@ RaiwayStation<int> rw = new RaiwayStation<int>(trains);
 Console.Write("Введите время:");
 TimeOnly timeDest = TimeOnly.Parse(Console.ReadLine()!);
 rw.TrainsByTime(timeDest);
-class RaiwayStation<T>
+
+var enumerator=trains.GetEnumerator();
+while (enumerator.MoveNext())
+{
+    Console.WriteLine(enumerator.Current);
+}
+
+//1
+
+//class RaiwayStation<T>:IEnumerable<Train<T>>
+//{
+//    private Train<T>[] trains;
+//    public RaiwayStation(Train<T>[] _train)
+//    {
+//        trains = _train;
+//    }
+
+//    public void TrainsByTime(TimeOnly time)
+//    {
+//        for (int i = 0; i < trains.Length; i++)
+//        {
+//            if (trains[i].Time > time) Console.WriteLine(trains[i]);
+//        }
+//    }
+
+//    IEnumerator IEnumerable.GetEnumerator()
+//    {
+//        return GetEnumerator();
+//    }
+
+//    public IEnumerator<Train<T>> GetEnumerator()
+//    {
+//        return new RailwayStationEnumerator<T>(trains);
+//    }
+//}
+
+//2
+class RaiwayStation<T> : IEnumerable<Train<T>>
 {
     private Train<T>[] trains;
     public RaiwayStation(Train<T>[] _train)
     {
         trains = _train;
     }
+
+    public IEnumerator<Train<T>> GetEnumerator()
+    {
+        for (int i = 0; i < trains.Length; i++)
+        {
+            yield return trains[i];
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
     public void TrainsByTime(TimeOnly time)
     {
-        //for (int i = 0; i < trains.Length; i++)
-        //{
-        //    if (trains[i].Time>time) Console.WriteLine(trains[i]);
-        //}
-        
+        for (int i = 0; i < trains.Length; i++)
+        {
+            if (trains[i].Time > time) Console.WriteLine(trains[i]);
+        }
     }
 }
+
 class Train<T>:ICloneable,IComparable
 {
     public T Number { get; }
@@ -319,7 +369,7 @@ class RailwayStationEnumerator<T> : IEnumerator<Train<T>>
     public RailwayStationEnumerator(Train<T>[] _trains)
     {
         this.trains =_trains;
-        current=default(Train<T>);
+        current=default(Train<T>)!;
     }
 
     public Train<T> Current
