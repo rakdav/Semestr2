@@ -31,10 +31,53 @@ using System.Reflection;
 //procInfo.FileName = @"C:\Program Files\Google\Chrome\Application\chrome";
 //procInfo.Arguments = "https://mail.ru";
 //Process.Start(procInfo);
-AppDomain domain=AppDomain.CurrentDomain;
-Console.WriteLine(domain.FriendlyName);
-Console.WriteLine(domain.BaseDirectory);
-Assembly[] assemblies = domain.GetAssemblies();
-foreach (Assembly assembly in assemblies)
-    Console.WriteLine(assembly.GetName().Name);
+//AppDomain domain=AppDomain.CurrentDomain;
+//Console.WriteLine(domain.FriendlyName);
+//Console.WriteLine(domain.BaseDirectory);
+//Assembly[] assemblies = domain.GetAssemblies();
+//foreach (Assembly assembly in assemblies)
+//    Console.WriteLine(assembly.GetName().Name);
+
+
+//потоки 
+//Thread currentThread = Thread.CurrentThread;
+//Console.WriteLine(currentThread.Name);
+//Console.WriteLine(currentThread.IsAlive);
+//Console.WriteLine(currentThread.ManagedThreadId);
+//Console.WriteLine(currentThread.ThreadState);
+//currentThread.Name = "Nikitin";
+//Console.WriteLine(currentThread.Name);
+//Thread.Sleep(2000);
+//Console.WriteLine("Hello");
+//for (int i = 1; i < 61; i++)
+//{
+//    Console.WriteLine(i);
+//    Thread.Sleep(1000);
+//    Console.Clear();
+//}
+//void Print() => Console.WriteLine("Hello thread");
+//Thread t1=new Thread(Print);
+//Thread t2=new Thread(new ThreadStart(Print));
+//Thread t3=new Thread(()=>Console.WriteLine("Hello"));
+//t1.Start();
+//t2.Start();
+//t3.Start();
+Thread thread = new Thread(Print);
+thread.Start();
+for (int i = 0; i < 5; i++)
+{
+    Console.WriteLine($"Главный поток:{i}");
+    Thread.Sleep(500);
+}
+
+void Print()
+{
+	for (int i = 0; i < 5; i++)
+	{
+        Console.WriteLine($"Второй поток:{i}");
+		Thread.Sleep(1000);
+	}
+}
+
+
 
