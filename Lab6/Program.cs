@@ -270,8 +270,9 @@ for (int i = 0; i < integers.Length; i++) integers[i] = random.Next(10, 100);
 //teacher.Exam("Физика");
 
 
-void Simple(int n)
+string Simple(int n)
 {
+    string res = "";
     if(n%2==0)
     {
         int step = 0;
@@ -280,7 +281,7 @@ void Simple(int n)
             step++;
             n/= 2;
         }
-        Console.WriteLine($"2^{step}");
+        res+=$"2^{step}";
 
     }
     if (sum(n) % 3 == 0)
@@ -291,7 +292,8 @@ void Simple(int n)
             step++;
             n /= 3;
         }
-        Console.WriteLine($"3^{step}");
+        if (res == "") res+=$"3^{step}";
+        else res+=$"*3^{step}";
     }
     if (n % 10 == 0 || n % 10 == 5)
     {
@@ -301,8 +303,10 @@ void Simple(int n)
             step++;
             n /= 5;
         }
-        Console.WriteLine($"5^{step}");
+        if (res == "") res += $"5^{step}";
+        else res +=$"*5^{step}";
     }
+    return res+"*"+n;
 }
 int sum(int m)
 {
@@ -318,5 +322,5 @@ int sum(int m)
 Console.Write("Введите число:");
 int n=int.Parse(Console.ReadLine()!);
 SimpleDelegate del=Simple;
-del(n);
-delegate void SimpleDelegate(int n);
+Console.WriteLine(del(n));
+delegate string SimpleDelegate(int n);
