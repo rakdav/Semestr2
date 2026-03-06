@@ -224,30 +224,47 @@ for (int i = 0; i < integers.Length; i++) integers[i] = random.Next(10, 100);
 //Контвариантность и ковариантность
 
 //ковариантность
-EMailMessage WriteEMailMessage(string text) => new EMailMessage(text);
-MessageBuilder messageBuilder = WriteEMailMessage;
-Message message = messageBuilder("Hello");
-message.Print();
-//Контвариантность
-void ReceiveMessage(Message message)=>message.Print();
-EmailReceiver emailBox=ReceiveMessage;
-emailBox(new EMailMessage("Hello"));
+//EMailMessage WriteEMailMessage(string text) => new EMailMessage(text);
+//MessageBuilder messageBuilder = WriteEMailMessage;
+//Message message = messageBuilder("Hello");
+//message.Print();
+////Контвариантность
+//void ReceiveMessage(Message message)=>message.Print();
+//EmailReceiver emailBox=ReceiveMessage;
+//emailBox(new EMailMessage("Hello"));
 
-class Message
-{
-    public string Text { get; }
-    public Message(string text)=>Text = text;
-    public virtual void Print()=>Console.WriteLine($"Message:{Text}");
-}
-class EMailMessage : Message
-{
-    public EMailMessage(string text) : base(text){}
-    public override void Print() => Console.WriteLine($"Email:{Text}");
-}
-class SMSMessage : Message
-{
-    public SMSMessage(string text) : base(text) { }
-    public override void Print() => Console.WriteLine($"SMS:{Text}");
-}
-delegate Message MessageBuilder(string text);
-delegate void EmailReceiver(EMailMessage text);
+//class Message
+//{
+//    public string Text { get; }
+//    public Message(string text)=>Text = text;
+//    public virtual void Print()=>Console.WriteLine($"Message:{Text}");
+//}
+//class EMailMessage : Message
+//{
+//    public EMailMessage(string text) : base(text){}
+//    public override void Print() => Console.WriteLine($"Email:{Text}");
+//}
+//class SMSMessage : Message
+//{
+//    public SMSMessage(string text) : base(text) { }
+//    public override void Print() => Console.WriteLine($"SMS:{Text}");
+//}
+//delegate Message MessageBuilder(string text);
+//delegate void EmailReceiver(EMailMessage text);
+
+//Student[] group=new Student[3]{ 
+//    new Student{FirstName="Антихрист",LastName="Никитин",
+//        BirthDate=new DateTime(2006,3,11)},
+//    new Student{FirstName="Мега",LastName="Бабаев",
+//        BirthDate=new DateTime(2006,5,9)},
+//    new Student{FirstName="Микро",LastName="Лавров",
+//        BirthDate=new DateTime(2009,1,5)},
+//};
+//Teacher teacher= new Teacher();
+//foreach (Student student in group)
+//    teacher.examEvent += student.Exam;
+////teacher.Exam("Физика");
+////teacher.Exam("Математика");
+////teacher.examEvent.Invoke("рейтинг");
+////teacher.examEvent = null;
+//teacher.Exam("Физика");
