@@ -268,3 +268,55 @@ for (int i = 0; i < integers.Length; i++) integers[i] = random.Next(10, 100);
 ////teacher.examEvent.Invoke("рейтинг");
 ////teacher.examEvent = null;
 //teacher.Exam("Физика");
+
+
+void Simple(int n)
+{
+    if(n%2==0)
+    {
+        int step = 0;
+        while (n % 2 == 0)
+        {
+            step++;
+            n/= 2;
+        }
+        Console.WriteLine($"2^{step}");
+
+    }
+    if (sum(n) % 3 == 0)
+    {
+        int step = 0;
+        while (n % 3 == 0)
+        {
+            step++;
+            n /= 3;
+        }
+        Console.WriteLine($"3^{step}");
+    }
+    if (n % 10 == 0 || n % 10 == 5)
+    {
+        int step = 0;
+        while (n % 5 == 0)
+        {
+            step++;
+            n /= 5;
+        }
+        Console.WriteLine($"5^{step}");
+    }
+}
+int sum(int m)
+{
+    int s = 0;
+    while (m != 0)
+    {
+        s += m%10;
+        m /= 10;
+    }
+    return s;
+}
+
+Console.Write("Введите число:");
+int n=int.Parse(Console.ReadLine()!);
+SimpleDelegate del=Simple;
+del(n);
+delegate void SimpleDelegate(int n);
