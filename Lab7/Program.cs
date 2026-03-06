@@ -1,0 +1,26 @@
+﻿using System.Collections;
+
+ArrayList array=new ArrayList();
+array.Add(6);
+array.Add("rest");
+array.Add(7.9);
+array.Add(true);
+array.Add('c');
+foreach(var i in array) Console.Write(i+" ");
+Console.WriteLine();
+Console.WriteLine(array.Count);
+Console.WriteLine(array.Capacity);
+ArrayList array2=new ArrayList(array);
+array2.Add("gfgdf");
+Console.WriteLine(array2.Capacity);
+Console.WriteLine(array2.Count);
+Console.WriteLine(array2[3]);
+array2.Insert(2, "gdfg");
+foreach (var i in array2) Console.Write(i + " ");
+Console.WriteLine();
+array2.RemoveAt(0);
+array2.Remove("gfgdf");
+Console.WriteLine(array2.Contains("rest"));
+Console.WriteLine(array2.IndexOf("rest"));
+Console.WriteLine(array2.LastIndexOf("rest"));
+array2.Clear();
