@@ -275,7 +275,7 @@ public class OurLinkedList  // односвязный список
     }
     public bool Dublicate(double data)
     {
-        Node current = head;
+        Node current = head!;
         while (current!=null&&!current.Data.Equals(data))
         {
            current = current.Next;
