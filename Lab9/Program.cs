@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Lab9;
+using System.Collections;
 //Связный список
 //LinkedList<string> list = new LinkedList<string>();
 //list.Add("one");
@@ -112,3 +113,42 @@
 //}
 
 //Двусвязные списки
+//DoublyLinkedList<string> linkList=new DoublyLinkedList<string>();
+//linkList.Add("Serge");
+//linkList.Add("Gnome");
+//linkList.Add("MaxicBaev");
+//foreach (string link in linkList) Console.Write(link+" ");
+//Console.WriteLine();
+//linkList.Remove("Gnome");
+//foreach(var t in linkList.BackEnumerator())
+//    Console.Write(t+" ");
+//Console.WriteLine();
+
+//Двухсвязный список LinkedList<T>
+LinkedList<int> numbers=new LinkedList<int>();
+for (int i = 0; i < new Random().Next(10,20); i++)
+    numbers.AddLast(i);
+Console.WriteLine(numbers.Count);
+Console.WriteLine(numbers.First?.Value);
+Console.WriteLine(numbers.Last?.Value);
+numbers.AddAfter(numbers.First!,7);
+numbers.AddBefore(numbers.Last!,78);
+numbers.RemoveFirst();
+numbers.RemoveLast();
+foreach (var item in numbers) Console.Write(item+" ");
+Console.WriteLine();
+
+var currentNode=numbers.First;
+while (currentNode != null)
+{
+    Console.Write(currentNode.Value+" ");
+    currentNode=currentNode.Next;
+}
+Console.WriteLine();
+currentNode = numbers.Last;
+while (currentNode != null)
+{
+    Console.Write(currentNode.Value+" ");
+    currentNode = currentNode.Previous;
+}
+Console.WriteLine();

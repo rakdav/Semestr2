@@ -79,7 +79,7 @@ namespace Lab9
             }
             return false;
         }
-        public IEnumerator<T> BackEnumerator()
+        public IEnumerable<T> BackEnumerator()
         {
             DoublyNode<T> current = tail;
             while (current != null)
