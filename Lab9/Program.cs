@@ -1,5 +1,6 @@
 ﻿using Lab9;
 using System.Collections;
+using System.Collections.Generic;
 //Связный список
 //LinkedList<string> list = new LinkedList<string>();
 //list.Add("one");
@@ -125,30 +126,109 @@ using System.Collections;
 //Console.WriteLine();
 
 //Двухсвязный список LinkedList<T>
-LinkedList<int> numbers=new LinkedList<int>();
-for (int i = 0; i < new Random().Next(10,20); i++)
-    numbers.AddLast(i);
-Console.WriteLine(numbers.Count);
-Console.WriteLine(numbers.First?.Value);
-Console.WriteLine(numbers.Last?.Value);
-numbers.AddAfter(numbers.First!,7);
-numbers.AddBefore(numbers.Last!,78);
-numbers.RemoveFirst();
-numbers.RemoveLast();
-foreach (var item in numbers) Console.Write(item+" ");
-Console.WriteLine();
+//LinkedList<int> numbers=new LinkedList<int>();
+//for (int i = 0; i < new Random().Next(10,20); i++)
+//    numbers.AddLast(i);
+//Console.WriteLine(numbers.Count);
+//Console.WriteLine(numbers.First?.Value);
+//Console.WriteLine(numbers.Last?.Value);
+//numbers.AddAfter(numbers.First!,7);
+//numbers.AddBefore(numbers.Last!,78);
+//numbers.RemoveFirst();
+//numbers.RemoveLast();
+//foreach (var item in numbers) Console.Write(item+" ");
+//Console.WriteLine();
 
-var currentNode=numbers.First;
-while (currentNode != null)
+//var currentNode=numbers.First;
+//while (currentNode != null)
+//{
+//    Console.Write(currentNode.Value+" ");
+//    currentNode=currentNode.Next;
+//}
+//Console.WriteLine();
+//currentNode = numbers.Last;
+//while (currentNode != null)
+//{
+//    Console.Write(currentNode.Value+" ");
+//    currentNode = currentNode.Previous;
+//}
+//Console.WriteLine();
+//6 вариант. Базовый уровень.
+OurLinkedList list =new OurLinkedList();
+Random random=new Random(); 
+for(int i=0; i < random.Next(10, 20); i++)
 {
-    Console.Write(currentNode.Value+" ");
-    currentNode=currentNode.Next;
+    list.Add(random.Next(100));
 }
-Console.WriteLine();
-currentNode = numbers.Last;
-while (currentNode != null)
+list.Print();
+double find=double.Parse(Console.ReadLine()!);
+list.PrevRemove(find);
+list.Print();
+
+public class Node
 {
-    Console.Write(currentNode.Value+" ");
-    currentNode = currentNode.Previous;
+    public Node(double data)
+    {
+        Data = data;
+    }
+    public double Data { get; set; }
+    public Node Next { get; set; }
 }
-Console.WriteLine();
+
+public class OurLinkedList  // односвязный список
+{
+    Node? head; // головной/первый элемент
+    Node? tail; // последний/хвостовой элемент
+    int count;  // количество элементов в списке
+
+    // добавление элемента
+    public void Add(double data)
+    {
+        Node node = new Node(data);
+
+        if (head == null)
+            head = node;
+        else
+            tail!.Next = node;
+        tail = node;
+
+        count++;
+    }
+    public void PrevRemove(double data)
+    {
+        if(head==null||head.Next==null) return;
+        if(head.Data==data) return;
+        if (head.Next.Data == data)
+        {
+            head=head.Next;
+            return;
+        }
+        Node current=head;
+        while(current.Next != null&&current.Next.Next!=null)
+        {
+            if (current.Next.Next.Data == data)
+            {
+                current.Next = current.Next.Next;
+                return;
+            }
+            current = current.Next;
+        }
+    }
+    public void Print()
+    {
+        if (head == null)
+        {
+            Console.WriteLine("Список пуст");
+            return;
+        }
+
+        Node current = head;
+        while (current != null)
+        {
+            Console.Write(current.Data + " ");
+            current = current.Next;
+        }
+        Console.WriteLine();
+    }
+}
+
