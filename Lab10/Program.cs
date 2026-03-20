@@ -83,78 +83,106 @@
 //{
 //    Console.WriteLine(key+":"+value);
 //}
-Console.Write("Введите количество учеников в классе:");
-int n=int.Parse(Console.ReadLine()!);
-Group group = new Group(n);
-group.Create();
-group.Print();
-group.HowMany();
-class Person
-{
-    public int Quantity { get; set; }
-    public List<string>? Languages;
-    public Person(int n)
-    {
-        Quantity = n;
-        Languages = new List<string>();
-    }
-    public void Create()
-    {
-        Console.WriteLine("Введите языки:");
-        for (int i = 0; i < Quantity; i++)
-        {
-            string lang=Console.ReadLine()!;
-            Languages!.Add(lang);
-        }
-    }
-    public void Print()
-    {
-        Console.WriteLine("Количество языков:"+Quantity);
-        foreach (var item in Languages!)
-        {
-            Console.WriteLine(item);
-        }
-    }
-}
 
-class Group
-{
-    private int Count;
-    public List<Person>? persons;
-    public Group(int n)
-    {
-        Count = n;
-        persons = new List<Person>();
-    }
-    public void Create()
-    {
-        for (int i = 0; i < Count; i++)
-        {
-            Console.Write("Сколько языков знает ученик:");
-            int n=int.Parse(Console.ReadLine()!);
-            Person p=new Person(n);
-            p.Create();
-            persons!.Add(p);
-        }
-    }
-    public void Print()
-    {
-        foreach(Person i in persons!) i.Print();
-    }
-    public void HowMany()
-    {
-        SortedSet<string> s = new SortedSet<string>();
-        foreach(Person i in persons!)
-        {
-            foreach (string s2 in i.Languages!)
-            {
-                s.Add(s2.ToLower());
-            }
-        }
-        Console.WriteLine("Все школьники:"+s.Count);
-        foreach(string s2 in s) Console.WriteLine(s2+" ");
-    }
-}
+//Вариант 8
+//Console.Write("Введите количество учеников в классе:");
+//int n=int.Parse(Console.ReadLine()!);
+//Group group = new Group(n);
+//group.Create();
+//group.Print();
+//group.HowMany();
+//class Person
+//{
+//    public int Quantity { get; set; }
+//    public List<string>? Languages;
+//    public Person(int n)
+//    {
+//        Quantity = n;
+//        Languages = new List<string>();
+//    }
+//    public void Create()
+//    {
+//        Console.WriteLine("Введите языки:");
+//        for (int i = 0; i < Quantity; i++)
+//        {
+//            string lang=Console.ReadLine()!;
+//            Languages!.Add(lang);
+//        }
+//    }
+//    public void Print()
+//    {
+//        Console.WriteLine("Количество языков:"+Quantity);
+//        foreach (var item in Languages!)
+//        {
+//            Console.WriteLine(item);
+//        }
+//    }
+//}
 
+//class Group
+//{
+//    private int Count;
+//    public List<Person>? persons;
+//    public Group(int n)
+//    {
+//        Count = n;
+//        persons = new List<Person>();
+//    }
+//    public void Create()
+//    {
+//        for (int i = 0; i < Count; i++)
+//        {
+//            Console.Write("Сколько языков знает ученик:");
+//            int n=int.Parse(Console.ReadLine()!);
+//            Person p=new Person(n);
+//            p.Create();
+//            persons!.Add(p);
+//        }
+//    }
+//    public void Print()
+//    {
+//        foreach(Person i in persons!) i.Print();
+//    }
+//    public void HowMany()
+//    {
+//        SortedSet<string> s = new SortedSet<string>();
+//        foreach(Person i in persons!)
+//        {
+//            foreach (string s2 in i.Languages!)
+//            {
+//                s.Add(s2.ToLower());
+//            }
+//        }
+//        Console.WriteLine("Все школьники:"+s.Count);
+//        foreach(string s2 in s) Console.WriteLine(s2+" ");
+//    }
+//}
+Console.Write("Введите количество слов:");
+int n = int.Parse(Console.ReadLine()!);
+Console.WriteLine("Введите слова в формате: сначала английское слово, затем отделённый пробелами дефис, затем разделённые запятыми с пробелами переводы этого английского слова на латинский.");
+Dictionary<string,List<string>> LatEng=new Dictionary<string,List<string>>();
+for (int i = 0; i < n; i++)
+{
+    Console.WriteLine();
+    string s = Console.ReadLine()!;
+    string[] one=s.Split(" - ");
+    string key=one[0];
+    List<string> values=one[1].Split(", ").ToList();
+    values.Sort();
+    LatEng.Add(key, values);
+}
+foreach(var (k,v) in LatEng)
+{
+    Console.Write(k+":");
+    foreach(string m in v) Console.Write(m+" ");
+    Console.WriteLine();
+}
+Console.Write("Введите слово:");
+string word=Console.ReadLine()!;
+foreach(var (k, v) in LatEng)
+{
+    if(k==word)
+        foreach (string m in v) Console.Write(m + " ");
+}
 
 
