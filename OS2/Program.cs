@@ -130,21 +130,23 @@
 //Parallel.For
 //Parallel.For(1, 5, Square);
 //Parallel.ForEach
-ParallelLoopResult result = Parallel.ForEach<int>(
-    new List<int>() { 1, 3, 5, 7 },
-    Square);
-if(!result.IsCompleted)
-    Console.WriteLine($"Выполнение цикла завершено на итерации {result.LowestBreakIteration}");
-void Print()
-{
-    Console.WriteLine($"Выполняется задача {Task.CurrentId}");
-    Thread.Sleep(3000);
-}
+//ParallelLoopResult result = Parallel.ForEach<int>(
+//    new List<int>() { 1, 3, 5, 7 },
+//    Square);
+//if(!result.IsCompleted)
+//    Console.WriteLine($"Выполнение цикла завершено на итерации {result.LowestBreakIteration}");
+//void Print()
+//{
+//    Console.WriteLine($"Выполняется задача {Task.CurrentId}");
+//    Thread.Sleep(3000);
+//}
 
-void Square(int n,ParallelLoopState pls)
-{
-    if(n==5) pls.Break();
-    Console.WriteLine($"Выполняется задача {Task.CurrentId}");
-    Thread.Sleep(3000);
-    Console.WriteLine($"Результат {n * n}");
-}
+//void Square(int n,ParallelLoopState pls)
+//{
+//    if(n==5) pls.Break();
+//    Console.WriteLine($"Выполняется задача {Task.CurrentId}");
+//    Thread.Sleep(3000);
+//    Console.WriteLine($"Результат {n * n}");
+//}
+
+
