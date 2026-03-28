@@ -1,6 +1,29 @@
-﻿using Lab11;
+﻿using Faker;
 using System;
-using System.ComponentModel.DataAnnotations;
+Random random=new Random();
+List<Person> persons=new List<Person>();
+for (var i = 0; i < 20; i++)
+{ 
+    int salary = random.Next(50000, 200000);
+    int gender = random.Next(1, 3);
+    persons.Add(new Person(Faker.Name.FullName(),(gender==1)?"М":"Ж",salary));
+}
+foreach (var person in persons) {
+    Console.WriteLine(person.Name + " " + person.Salary + " " + person.Gender);
+}
+Console.WriteLine();
+Person maxSalaryPerson =persons.FirstOrDefault(p=>p.Salary==persons.Max(c=>c.Salary))!;
+Console.WriteLine(maxSalaryPerson.Name + " " + maxSalaryPerson.Salary + " " + maxSalaryPerson.Gender);
+
+List<Person> personsMale = persons.Where(p => p.Gender == "М").ToList();
+Person minSalaryMale= personsMale.FirstOrDefault(p => p.Salary == personsMale.Min(c => c.Salary))!;
+Console.WriteLine(minSalaryMale.Name + " " + minSalaryMale.Salary + " " + minSalaryMale.Gender);
+
+
+List<Person> personsFemale = persons.Where(p => p.Gender == "Ж").ToList();
+Person minSalaryFemale = personsFemale.FirstOrDefault(p => p.Salary == personsFemale.Min(c => c.Salary))!;
+Console.WriteLine(minSalaryFemale.Name + " " + minSalaryFemale.Salary + " " + minSalaryFemale.Gender);
+
 
 //Console.Write("Введите строку:");
 //string str=Console.ReadLine()!;
@@ -9,22 +32,22 @@ using System.ComponentModel.DataAnnotations;
 //char c=Convert.ToChar(code);
 //Console.WriteLine(str.CountWord(c));
 
-List<Car> GetCars()
-{
-    return new List<Car>
-                {
-                    new Car { VIN = "ABC123", Make = "Ford",
-                            Model = "F-250", Year = 2000 },
-                    new Car { VIN = "DEF123", Make = "BMW",
-                            Model = "Z-3", Year = 2005 },
-                    new Car { VIN = "ABC456", Make = "Audi",
-                            Model = "TT", Year = 2008 },
-                    new Car { VIN = "HIJ123", Make = "VW",
-                            Model = "Bug",  Year = 1956  },
-                    new Car { VIN = "DEF456", Make = "Ford",
-                            Model = "F-150", Year = 1998 }
-                };
-}
+//List<Car> GetCars()
+//{
+//    return new List<Car>
+//                {
+//                    new Car { VIN = "ABC123", Make = "Ford",
+//                            Model = "F-250", Year = 2000 },
+//                    new Car { VIN = "DEF123", Make = "BMW",
+//                            Model = "Z-3", Year = 2005 },
+//                    new Car { VIN = "ABC456", Make = "Audi",
+//                            Model = "TT", Year = 2008 },
+//                    new Car { VIN = "HIJ123", Make = "VW",
+//                            Model = "Bug",  Year = 1956  },
+//                    new Car { VIN = "DEF456", Make = "Ford",
+//                            Model = "F-150", Year = 1998 }
+//                };
+//}
 //bool IsOld1960()
 //{
 //    int count = 0;
@@ -249,45 +272,46 @@ List<Car> GetCars()
 //}
 
 //Операторы запросов LINQ
-Person[] people =
-{
-    new Person("Tom", "Microsoft"), new Person("Sam", "Google"),
-    new Person("Bob", "JetBrains"), new Person("Mike", "Microsoft"),
-};
+//Person[] people =
+//{
+//    new Person("Tom", "Microsoft"), new Person("Sam", "Google"),
+//    new Person("Bob", "JetBrains"), new Person("Mike", "Microsoft"),
+//};
 
-Company[] companies =
-{
-    new Company("Microsoft", "C#"),
-    new Company("Google", "Go"),
-    new Company("Oracle", "Java")
-};
-var emp1=from p in people
-         join c in companies on p.Company equals c.Title
-         select new { Name=p.Name,Company=c.Title,Language=c.Language};
-foreach (var emp in emp1)
-    Console.WriteLine($"{emp.Name} - {emp.Company} ({emp.Language})");
+//Company[] companies =
+//{
+//    new Company("Microsoft", "C#"),
+//    new Company("Google", "Go"),
+//    new Company("Oracle", "Java")
+//};
+//var emp1=from p in people
+//         join c in companies on p.Company equals c.Title
+//         select new { Name=p.Name,Company=c.Title,Language=c.Language};
+//foreach (var emp in emp1)
+//    Console.WriteLine($"{emp.Name} - {emp.Company} ({emp.Language})");
 
-//Методы расширения LINQ
-var empex1 = people.Join(companies, p => p.Company, c => c.Title,
-    (p, c) =>new { Name = p.Name, Company = c.Title, Language = c.Language });
-var empex2 = companies.GroupJoin(people,
-        c=>c.Title,
-        p=>p.Company,
-        (c, employes) => new
-        {
-            Title=c.Title,
-            Employes=employes
-        }
-    );
-foreach(var c in empex2)
-{
-    Console.WriteLine(c.Title);
-    foreach(var emp in c.Employes)
-    {
-        Console.WriteLine(emp.Name);
-    }
-}
-record class Person(string Name, string Company);
+////Методы расширения LINQ
+//var empex1 = people.Join(companies, p => p.Company, c => c.Title,
+//    (p, c) =>new { Name = p.Name, Company = c.Title, Language = c.Language });
+//var empex2 = companies.GroupJoin(people,
+//        c=>c.Title,
+//        p=>p.Company,
+//        (c, employes) => new
+//        {
+//            Title=c.Title,
+//            Employes=employes
+//        }
+//    );
+//foreach(var c in empex2)
+//{
+//    Console.WriteLine(c.Title);
+//    foreach(var emp in c.Employes)
+//    {
+//        Console.WriteLine(emp.Name);
+//    }
+//}
+
+record class Person(string Name, string Gender, double Salary);
 record class Company(string Title, string Language);
 public class Car
 {
