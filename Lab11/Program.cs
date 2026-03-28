@@ -12,6 +12,7 @@ foreach (var person in persons) {
     Console.WriteLine(person.Name + " " + person.Salary + " " + person.Gender);
 }
 Console.WriteLine();
+
 Person maxSalaryPerson =persons.FirstOrDefault(p=>p.Salary==persons.Max(c=>c.Salary))!;
 Console.WriteLine(maxSalaryPerson.Name + " " + maxSalaryPerson.Salary + " " + maxSalaryPerson.Gender);
 
