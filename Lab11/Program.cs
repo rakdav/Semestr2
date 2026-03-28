@@ -1,5 +1,6 @@
 ﻿using Lab11;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 //Console.Write("Введите строку:");
 //string str=Console.ReadLine()!;
@@ -247,6 +248,7 @@ List<Car> GetCars()
 //    }
 //}
 
+//Операторы запросов LINQ
 Person[] people =
 {
     new Person("Tom", "Microsoft"), new Person("Sam", "Google"),
@@ -259,6 +261,32 @@ Company[] companies =
     new Company("Google", "Go"),
     new Company("Oracle", "Java")
 };
+var emp1=from p in people
+         join c in companies on p.Company equals c.Title
+         select new { Name=p.Name,Company=c.Title,Language=c.Language};
+foreach (var emp in emp1)
+    Console.WriteLine($"{emp.Name} - {emp.Company} ({emp.Language})");
+
+//Методы расширения LINQ
+var empex1 = people.Join(companies, p => p.Company, c => c.Title,
+    (p, c) =>new { Name = p.Name, Company = c.Title, Language = c.Language });
+var empex2 = companies.GroupJoin(people,
+        c=>c.Title,
+        p=>p.Company,
+        (c, employes) => new
+        {
+            Title=c.Title,
+            Employes=employes
+        }
+    );
+foreach(var c in empex2)
+{
+    Console.WriteLine(c.Title);
+    foreach(var emp in c.Employes)
+    {
+        Console.WriteLine(emp.Name);
+    }
+}
 record class Person(string Name, string Company);
 record class Company(string Title, string Language);
 public class Car
