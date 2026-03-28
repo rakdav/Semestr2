@@ -1,4 +1,5 @@
 ﻿using Lab11;
+using System;
 
 //Console.Write("Введите строку:");
 //string str=Console.ReadLine()!;
@@ -141,15 +142,15 @@ List<Car> GetCars()
 //{
 //    Console.WriteLine("Number:{0} Make:{1}", it.Number, it.CarMake);
 //}
-Random rand = new Random();
-int[] mas = new int[10];
+//Random rand = new Random();
+//int[] mas = new int[10];
 //for (int i = 0; i < mas.Length; i++)
 //{
 //    mas[i] = rand.Next(10, 100);
 //}
-mas = mas.Select(i => i + rand.Next(1,10)).ToArray();
-foreach (int i in mas) Console.Write(i + " ");
-Console.WriteLine();
+//mas = mas.Select(i => i + rand.Next(1,10)).ToArray();
+//foreach (int i in mas) Console.Write(i + " ");
+//Console.WriteLine();
 //mas=mas.Select(i => i *2).ToArray();
 //foreach (int i in mas) Console.Write(i + " ");
 //Console.WriteLine();
@@ -161,16 +162,105 @@ Console.WriteLine();
 //mas = mas.Select(i => i / mas.ElementAt(0)).ToArray();
 //foreach (int i in mas) Console.Write(i + " ");
 //Console.WriteLine();
-Console.WriteLine(mas.Where(p=>p%2==0).Sum());
-Console.WriteLine(mas.Aggregate((x,y)=>x*y));
-Console.WriteLine(mas.Select(i=>i*i).Sum());
-Console.WriteLine(mas.Take(6).Sum());
-int k1 = int.Parse(Console.ReadLine()!);
-int k2 = int.Parse(Console.ReadLine()!);
-Console.WriteLine(mas.Where((i,k)=>k>k1&&k<k2).Sum());
-Console.WriteLine(mas.Average());
-Console.WriteLine(mas.Aggregate((x, y) => (y%2==0)?x+y:x-y));
+//Console.WriteLine(mas.Where(p=>p%2==0).Sum());
+//Console.WriteLine(mas.Aggregate((x,y)=>x*y));
+//Console.WriteLine(mas.Select(i=>i*i).Sum());
+//Console.WriteLine(mas.Take(6).Sum());
+//int k1 = int.Parse(Console.ReadLine()!);
+//int k2 = int.Parse(Console.ReadLine()!);
+//Console.WriteLine(mas.Where((i,k)=>k>k1&&k<k2).Sum());
+//Console.WriteLine(mas.Average());
+//Console.WriteLine(mas.Aggregate((x, y) => (y%2==0)?x+y:x-y));
 
+//Операторы запросов LINQ
+//var cars1 =from car in GetCars()
+//          select car;
+//foreach (var car in cars1)
+//    Console.WriteLine(car.Model+" "+car.VIN+" "+car.Make+" "+car.Color+" "+car.Year);
+//var cars2 = from car in GetCars()
+//            select new { Model=car.Model,Year=car.Year};
+//foreach (var car in cars2)
+//    Console.WriteLine(car.Model + " "+ car.Year);
+//var cars3 = from car in GetCars()
+//            where car.Model =="BMW"
+//            select new { Model = car.Model, Year = car.Year };
+//foreach (var car in cars3)
+//    Console.WriteLine(car.Model + " " + car.Year);
+//var cars4 = from car in GetCars()
+//            where car.Model == "Ford"&&car.Year >=2000
+//            select new { Model = car.Model, Year = car.Year };
+//foreach (var car in cars4)
+//    Console.WriteLine(car.Model + " " + car.Year);
+//var cars5=from car in GetCars() 
+//          orderby car.Year
+//          select car;
+//foreach (var car in cars5)
+//    Console.WriteLine(car.Model + " " + car.Year);
+//var cars6 = from car in GetCars()
+//            orderby car.Year descending
+//            select car;
+//foreach (var car in cars6)
+//    Console.WriteLine(car.Model + " " + car.Year);
+//var cars7 = from car in GetCars()
+//            orderby car.Year,car.Color
+//            select car;
+//foreach (var car in cars7)
+//    Console.WriteLine(car.Model + " " + car.Year);
+//var cars8 = from car in GetCars()
+//            group car by car.Make;
+//foreach (var car in cars8)
+//{
+//    Console.WriteLine(car.Key);
+//    foreach (var c in car)
+//    {
+//        Console.WriteLine(c.Year+" "+c.VIN+" "+c.Color+" "+c.Model);
+//    }
+//}
+//var cars9 = from car in GetCars()
+//            let model = car.Model
+//            let year = car.Year
+//            select new
+//            {
+//                Model=model,
+//                Year=year
+//            };
+//foreach (var car in cars9)
+//    Console.WriteLine(car.Year +" " + car.Model);
+//Console.WriteLine();
+////Методы расширения LINQ
+//List<Car> carsList1=GetCars().ToList();
+//var carsList2=GetCars().Select(p=>new { Model = p.Model, Year = p.Year }).ToList();
+//foreach (var car in carsList2)
+//    Console.WriteLine(car.Model + " " + car.Year);
+//var carsList3 = GetCars().Where(p=>p.Model== "BMW").Select(p => new { Model = p.Model, Year = p.Year }).ToList();
+//var carsList4 = GetCars().Where(p => p.Model == "FORD"&&p.Year>=2000).Select(p => new { Model = p.Model, Year = p.Year }).ToList();
+//var carsList5 = GetCars().OrderBy(p => p.Year).ToList();
+//var carsList6 = GetCars().OrderByDescending(p => p.Year).ToList();
+//var carsList7 = GetCars().OrderBy(p => p.Year).ThenBy(p=>p.Color).ToList();
+//var carsList8 =GetCars().GroupBy(p => p.Make).ToList();
+//foreach (var car in carsList8)
+//{
+//    Console.WriteLine(car.Key);
+//    foreach (var c in car)
+//    {
+//        Console.WriteLine(c.Year + " " + c.VIN + " " + c.Color + " " + c.Model);
+//    }
+//}
+
+Person[] people =
+{
+    new Person("Tom", "Microsoft"), new Person("Sam", "Google"),
+    new Person("Bob", "JetBrains"), new Person("Mike", "Microsoft"),
+};
+
+Company[] companies =
+{
+    new Company("Microsoft", "C#"),
+    new Company("Google", "Go"),
+    new Company("Oracle", "Java")
+};
+record class Person(string Name, string Company);
+record class Company(string Title, string Language);
 public class Car
 {
     public string? VIN { get; set; }
@@ -186,6 +276,5 @@ public class MyStringList : List<string>
         return this.Select(s => filter(s) ? s.ToUpper() : s);
     }
 }
-
 
 
