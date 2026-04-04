@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFLesson2"
         mc:Ignorable="d"
-        Title="Второе окно" Height="800" Width="1000" Icon="/Images/logo.ico">
+        Title="Второе окно" Height="800" Width="1000" 
+        Icon="/Images/logo.ico" Background="AliceBlue">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -20,15 +21,56 @@
                 <ColumnDefinition Width="9*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Image Source="/Images/logo.jpg" Grid.Column="0"/>
-            <TextBlock Text="Рога и копыта" Grid.Column="1" Style="{StaticResource Header}"/>
+            <Ellipse Width="90" Height="90">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="/Images/logo.jpg" 
+                                Stretch="UniformToFill"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <TextBlock Text="Рога и копыта" Grid.Column="1" 
+                       Style="{StaticResource Header}"/>
             <Image Source="/Images/User.jpg" Grid.Column="2"/>
         </Grid>
         <TextBlock Text="Форма записи на посящение мероприятия"
                    Grid.Row="1" Style="{StaticResource Header}"
                    HorizontalAlignment="Center"/>
-        <Grid Grid.Row="2">
-            
+        <Grid Grid.Row="2" Margin="40 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Border Background="LightGray" CornerRadius="10">
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Border Style="{StaticResource BorderStyle}">
+                        <TextBlock Grid.Row="0" Text="Информация для пропуска"
+                               Style="{StaticResource Title}"/>
+                    </Border>
+                    <TextBlock Grid.Row="1" Text="Срок действия заявки"
+                           Style="{StaticResource Header}"/>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" 
+                                VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock VerticalAlignment="Center"> c</TextBlock>
+                        <DatePicker />
+                        <TextBlock VerticalAlignment="Center"> по</TextBlock>
+                        <DatePicker />
+                    </StackPanel>
+                    <TextBlock Grid.Row="3" Text="Цель посещения:"
+                        Style="{StaticResource Header}" HorizontalAlignment="Center"/>
+                    <ComboBox Grid.Row="4" Margin="5">
+                        <ComboBoxItem>Микрозайм</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+            </Border>
+            <Grid Grid.Column="1" Margin="40 0 0 0">
+                
+            </Grid>
         </Grid>
     </Grid>
 </Window>
