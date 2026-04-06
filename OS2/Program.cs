@@ -149,4 +149,92 @@
 //    Console.WriteLine($"Результат {n * n}");
 //}
 
+//Асинхронность
+//Task
+//async Task PrintAsync()
+//{
+//    await Task.Delay(1000);
+//    Console.WriteLine("Начало метода");
+//    await Task.Run(Print);
+//    Console.WriteLine("Конец метода");
+//}
+
+void Print()
+{
+   // Thread.Sleep(3000);
+    Console.WriteLine("Hello, Pasha!");
+}
+
+Func<string, Task> printer = async (message) =>
+{
+    await Task.Delay(1000);
+    Console.WriteLine(message);
+};
+
+//void
+async void PrintVoidAsync(string message)
+{
+    await Task.Delay(2000);
+    Console.WriteLine(message);
+}
+
+//Task<T>
+async Task<int> SquareAsync(int n)
+{
+    await Task.Delay(1000);
+    return n * n;
+}
+
+//ValueTask<T>
+ValueTask<int> AddAsync(int a,int b)
+{
+    return new ValueTask<int>(a + b);
+}
+
+
+//Последовательное и параллельное выполнение. Task.WhenAll и Task.WhenAny
+async Task PrintAsync(string message)
+{
+    await Task.Delay(2000);
+    Console.WriteLine(message);
+}
+async Task<int> SquareAsyncResult(int n)
+{
+    await Task.Delay(1000);
+    return n * n;
+}
+
+
+//await PrintAsync();
+
+//await printer("Привет, Паша!");
+//await printer("Ты теперь Маша");
+
+//PrintVoidAsync("Привет, Паша!");
+//PrintVoidAsync("Ты теперь Маша");
+//await Task.Delay(2000);
+
+//Console.WriteLine(await SquareAsync(5)+" "+await SquareAsync(7));
+
+//var result = await AddAsync(4, 7);
+//Console.WriteLine(result);
+
+//var task1 = PrintAsync("Hello");
+//var task2 = PrintAsync("Pasha");
+//var task3 = PrintAsync("Good by");
+
+//await Task.WhenAny(task1,task2,task3);
+
+var task1 = SquareAsyncResult(6);
+var task2 = SquareAsyncResult(9);
+var task3 = SquareAsyncResult(3);
+
+int[] ressult=await Task.WhenAll(task1,task2,task3);
+foreach(int res in ressult)
+{
+    Console.WriteLine(res);
+}
+
+
+
 

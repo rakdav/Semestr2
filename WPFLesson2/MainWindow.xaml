@@ -39,8 +39,8 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <Border Background="LightGray" CornerRadius="10">
-                <Grid Grid.Column="0">
+            <Border Background="LightGray" CornerRadius="10" Grid.Column="0">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -56,9 +56,9 @@
                            Style="{StaticResource Header}"/>
                     <StackPanel Grid.Row="2" Orientation="Horizontal" 
                                 VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock VerticalAlignment="Center"> c</TextBlock>
+                        <TextBlock VerticalAlignment="Center"> c </TextBlock>
                         <DatePicker />
-                        <TextBlock VerticalAlignment="Center"> по</TextBlock>
+                        <TextBlock VerticalAlignment="Center"> по </TextBlock>
                         <DatePicker />
                     </StackPanel>
                     <TextBlock Grid.Row="3" Text="Цель посещения:"
@@ -68,9 +68,12 @@
                     </ComboBox>
                 </Grid>
             </Border>
-            <Grid Grid.Column="1" Margin="40 0 0 0">
-                
-            </Grid>
+            <Border Background="LightGray" CornerRadius="10" Grid.Column="1"
+                    Margin="30 0 0 0">
+                <Grid>
+                    
+                </Grid>
+            </Border>
         </Grid>
         <Grid Grid.Row="5">
             <Button Template="{StaticResource btTemplate}"
