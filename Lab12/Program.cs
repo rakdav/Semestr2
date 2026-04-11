@@ -153,29 +153,71 @@ using System.Text;
 #endregion
 
 #region Directory
-//string dirName = "C:\\";
-//if (Directory.Exists(dirName))
+//string dirName1 = "C:\\";
+//if (Directory.Exists(dirName1))
 //{
 //    Console.WriteLine("Подкаталоги:");
-//    string[] dirs= Directory.GetDirectories(dirName);
+//    string[] dirs = Directory.GetDirectories(dirName1);
 //    foreach (string dir in dirs) Console.WriteLine(dir);
 //    Console.WriteLine();
 //    Console.WriteLine("Файлы:");
-//    string[] files = Directory.GetFiles(dirName);
-//    foreach(string file in files) Console.WriteLine(file);
+//    string[] files = Directory.GetFiles(dirName1);
+//    foreach (string file in files) Console.WriteLine(file);
 //}
+////Фильтрация папок и файлов
+//string[] dirs1=Directory.GetDirectories(dirName1,"P*.");
+//foreach (string file in dirs1) Console.WriteLine(file);
+//string[] files1 = Directory.GetFiles(dirName1, ".exe");
+//foreach (string file in files1) Console.WriteLine(file);
+//Создание каталога
+//string path1 = @"G:\ЛысыйНикитин";
+//if(!Directory.Exists(path1)) Directory.CreateDirectory(path1);
+//if (Directory.Exists(@"G:\Nikitin"))
+//    Directory.Delete(@"G:\Nikitin");
+//else Console.WriteLine("Каталога нет");
 #endregion
+
 #region DirectoryInfo
-string dirName = "C:\\";
-var directory=new DirectoryInfo(dirName);
-if (directory.Exists)
-{
-    Console.WriteLine("Подкаталоги:");
-    DirectoryInfo[] dirs = directory.GetDirectories();
-    foreach (DirectoryInfo dir in dirs) Console.WriteLine(dir);
-    Console.WriteLine();
-    Console.WriteLine("Файлы:");
-    FileInfo[] files = directory.GetFiles();
-    foreach (FileInfo file in files) Console.WriteLine(file);
-}
+//string dirName2 = "C:\\";
+//var directory=new DirectoryInfo(dirName2);
+//if (directory.Exists)
+//{
+//    Console.WriteLine("Подкаталоги:");
+//    DirectoryInfo[] dirs = directory.GetDirectories();
+//    foreach (DirectoryInfo dir in dirs) Console.WriteLine(dir);
+//    Console.WriteLine();
+//    Console.WriteLine("Файлы:");
+//    FileInfo[] files = directory.GetFiles();
+//    foreach (FileInfo file in files) Console.WriteLine(file);
+//}
+////Фильтрация папок и файлов
+//var dir2 = new DirectoryInfo(dirName2);
+//DirectoryInfo[] dirsFind = directory.GetDirectories("P*.");
+//foreach (DirectoryInfo file in dirsFind) Console.WriteLine(file);
+//FileInfo[] files2=dir2.GetFiles("*.exe");
+//foreach (FileInfo file in files2) Console.WriteLine(file);
+//string path1 = @"G:\ЛысыйНикитин";
+//DirectoryInfo dir1 = new DirectoryInfo(path1);
+//if(!dir1.Exists) dir1.Create();
+//string path1 = @"C:\Program Files";
+//DirectoryInfo dirInfo = new DirectoryInfo(path1);
+//Console.WriteLine($"Название {dirInfo.Name}");
+//Console.WriteLine($"Полное название {dirInfo.FullName}");
+//Console.WriteLine($"Время создание {dirInfo.CreationTime}");
+//Console.WriteLine($"Корневой каталог {dirInfo.Root}");
+//DirectoryInfo dir = new DirectoryInfo(@"G:\Nikitin");
+//if(dir.Exists) dir.Delete();
+//else Console.WriteLine("Каталога нет");
+string oldPath = @"G:\SomeFolder";
+string newPath = @"G:\SomeDir";
+DirectoryInfo dir = new DirectoryInfo(oldPath);
+if (dir.Exists&&!Directory.Exists(newPath)) dir.MoveTo(newPath);
+#endregion
+
+#region File
+
+#endregion
+
+#region FileInfo
+
 #endregion
