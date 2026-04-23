@@ -1,10 +1,12 @@
 ﻿using Lab12WPF.Command;
 using Lab12WPF.Model;
 using Lab12WPF.View;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -25,7 +27,7 @@ namespace Lab12WPF.ViewModel
                 OnPropertyChanged(nameof(SelectedOwner));
             }
         }
-        public ObservableCollection<AutoOwner>? AutoOwners { get; set; }
+        public ObservableCollection<AutoOwner>? AutoOwners { get; set; }= new();
 
         public MainViewModel()
         {
@@ -70,7 +72,6 @@ namespace Lab12WPF.ViewModel
             //        }
             //    }
             //};
-
             Load();
         }
         private async void Load()
@@ -129,6 +130,26 @@ namespace Lab12WPF.ViewModel
                             MessageBoxImage.Warning) == MessageBoxResult.Yes)
                         {
                             AutoOwners!.Remove(owner);
+                        }
+                    }
+                }));
+            }
+        }
+        private RelayCommand saveCommand;
+        public RelayCommand SaveCommand
+        {
+            get
+            {
+                return saveCommand ?? (saveCommand = new RelayCommand(obj =>
+                {
+                    SaveFileDialog saveDialog = new SaveFileDialog();
+                    if (saveDialog.ShowDialog() == true)
+                    {
+                        string Filepath=saveDialog.FileName;
+                        using (StreamWriter writer=new StreamWriter(Filepath,true))
+                        {
+                            foreach(AutoOwner owner in AutoOwners!)
+                            writer.WriteLineAsync(owner!.ToString());
                         }
                     }
                 }));

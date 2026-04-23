@@ -70,6 +70,14 @@ namespace Lab12WPF.Model
                 OnPropertyChanged(nameof(TechPassport));
             }
         }
+
+        public override string? ToString()
+        {
+            return $"{FIO} {Phone} {Address.PostalCode} {Address.Country} " +
+                $"{Address.Region} {Address.Area} {Address.City} {Address.Street} {Address.Home} {Address.Department} " +
+                $"{Marka} {Number} {TechPassport}";
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

@@ -7,11 +7,24 @@
         mc:Ignorable="d"
         Title="Вариант 6" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.9*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.6*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Row="0" ItemsSource="{Binding AutoOwners}"
+        <Menu Height="40" FontSize="20" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Открыть ..." />
+                <MenuItem Header="Сохранить"/>
+                <MenuItem Header="Сохранить как ..." Command="{Binding SaveCommand}"/>
+                <Separator />
+                <MenuItem Header="Выход"/>
+            </MenuItem>
+        </Menu>
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding AutoOwners}"
                  SelectedItem="{Binding SelectedOwner}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -23,7 +36,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.9*"/>
                 <RowDefinition Height="0.1*"/>
