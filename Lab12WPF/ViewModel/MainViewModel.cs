@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Lab12WPF.ViewModel
 {
@@ -28,47 +29,47 @@ namespace Lab12WPF.ViewModel
 
         public MainViewModel()
         {
-            AutoOwners = new ObservableCollection<AutoOwner>()
-            {
-                new AutoOwner()
-                {
-                    FIO="Никитин Никитос Никитич",
-                    Marka="Мерседес",
-                    Phone="+79557854387",
-                    Number="в567ru39",
-                    TechPassport="ту678a",
-                    Address=new HomeAddress()
-                    {
-                        PostalCode=896756,
-                        City="Москва",
-                        Area="город Москва",
-                        Department=4,
-                        Country="Россия",
-                        Home=12,
-                        Region="Москвовская область",
-                        Street="Моховая"
-                    }
-                },
-                 new AutoOwner()
-                {
-                    FIO="Игого",
-                    Marka="Лошадь",
-                    Phone="+79557854387",
-                    Number="в567ru39",
-                    TechPassport="ту678a",
-                    Address=new HomeAddress()
-                    {
-                        PostalCode=896756,
-                        City="Москва",
-                        Area="город Москва",
-                        Department=4,
-                        Country="Россия",
-                        Home=12,
-                        Region="Москвовская область",
-                        Street="Моховая"
-                    }
-                }
-            };
+            //AutoOwners = new ObservableCollection<AutoOwner>()
+            //{
+            //    new AutoOwner()
+            //    {
+            //        FIO="Никитин Никитос Никитич",
+            //        Marka="Мерседес",
+            //        Phone="+79557854387",
+            //        Number="в567ru39",
+            //        TechPassport="ту678a",
+            //        Address=new HomeAddress()
+            //        {
+            //            PostalCode=896756,
+            //            City="Москва",
+            //            Area="город Москва",
+            //            Department=4,
+            //            Country="Россия",
+            //            Home=12,
+            //            Region="Москвовская область",
+            //            Street="Моховая"
+            //        }
+            //    },
+            //     new AutoOwner()
+            //    {
+            //        FIO="Игого",
+            //        Marka="Лошадь",
+            //        Phone="+79557854387",
+            //        Number="в567ru39",
+            //        TechPassport="ту678a",
+            //        Address=new HomeAddress()
+            //        {
+            //            PostalCode=896756,
+            //            City="Москва",
+            //            Area="город Москва",
+            //            Department=4,
+            //            Country="Россия",
+            //            Home=12,
+            //            Region="Москвовская область",
+            //            Street="Моховая"
+            //        }
+            //    }
+            //};
 
             Load();
         }
@@ -90,6 +91,45 @@ namespace Lab12WPF.ViewModel
                         AutoOwner newAutoOwner=window.AutoOwner;
                         
                         AutoOwners!.Add(newAutoOwner);
+                    }
+                }));
+            }
+        }
+        private RelayCommand editCommand;
+        public RelayCommand EditCommand
+        {
+            get
+            {
+                return editCommand ?? (editCommand = new RelayCommand(obj =>
+                {
+                    AutoOwner? owner=obj as AutoOwner;
+                    if(owner != null)
+                    {
+                        AutoOwnerWindow window = new AutoOwnerWindow(owner);
+                        if (window.ShowDialog() == true)
+                        {
+                            int index = AutoOwners!.IndexOf(owner);
+                            AutoOwners[index]= window.AutoOwner;
+                        }
+                    }
+                }));
+            }
+        }
+        private RelayCommand deleteCommand;
+        public RelayCommand DeleteCommand
+        {
+            get
+            {
+                return deleteCommand ?? (deleteCommand = new RelayCommand(obj =>
+                {
+                    AutoOwner? owner = obj as AutoOwner;
+                    if (owner != null)
+                    {
+                        if (MessageBox.Show("Вы действительно хотите удалить?","Внимание",MessageBoxButton.YesNo,
+                            MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                        {
+                            AutoOwners!.Remove(owner);
+                        }
                     }
                 }));
             }
