@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lab12WPF.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,22 @@ namespace Lab12WPF.View
     /// </summary>
     public partial class AutoOwnerWindow : Window
     {
-        public AutoOwnerWindow()
+        public AutoOwner AutoOwner { get; private set; }
+        public AutoOwnerWindow(AutoOwner _autoOwner)
         {
             InitializeComponent();
+            AutoOwner=_autoOwner;
+            DataContext = AutoOwner;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult=true;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DialogResult=false;
         }
     }
 }

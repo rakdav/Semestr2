@@ -84,8 +84,13 @@ namespace Lab12WPF.ViewModel
             {
                 return addCommand ?? (addCommand = new RelayCommand(obj =>
                 {
-                    AutoOwnerWindow window=new AutoOwnerWindow();
-                    window.Show();
+                    AutoOwnerWindow window=new AutoOwnerWindow(new AutoOwner());
+                    if (window.ShowDialog() == true)
+                    {
+                        AutoOwner newAutoOwner=window.AutoOwner;
+                        
+                        AutoOwners!.Add(newAutoOwner);
+                    }
                 }));
             }
         }

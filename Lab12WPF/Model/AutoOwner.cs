@@ -30,10 +30,10 @@ namespace Lab12WPF.Model
                 OnPropertyChanged(nameof(Phone));
             }
         }
-        private HomeAddress address;
+        private HomeAddress? address;
         public HomeAddress Address
         {
-            get => address;
+            get => address ??= new HomeAddress();
             set
             {
                 address = value;

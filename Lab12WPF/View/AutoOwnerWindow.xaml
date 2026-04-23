@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab12WPF.View"
         mc:Ignorable="d"
-        Title="AutoOwnerWindow" Height="550" Width="800">
+        Title="AutoOwnerWindow" Height="700" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -31,7 +31,7 @@
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Адрес" Padding="5" Grid.Row="1" Margin="10">
-                <Grid>
+                <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -42,7 +42,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBox Text="{Binding PostalCode}" Grid.Row="0" Grid.Column="0"
+                    <TextBox Text="{Binding Address.PostalCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="0" Grid.Column="0"
                              Margin="10 15"/>
                     <TextBox Text="{Binding Country}" Grid.Row="1" Grid.Column="0"
                         Margin="10 15"/>
@@ -63,7 +63,8 @@
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.9*"/>
+                <RowDefinition Height="0.8*"/>
+                <RowDefinition Height="0.1*"/>
                 <RowDefinition Height="0.1*"/>
             </Grid.RowDefinitions>
             <Image Grid.Row="0" Margin="10" />
@@ -72,8 +73,15 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Загрузить" Grid.Column="0" Margin="20 10"/>
-                <Button Content="Очистить" Grid.Column="1" Margin="20 10"/>
+                <Button Content="Загрузить"  Grid.ColumnSpan="2" Margin="20 10"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Сохранить" Grid.Column="0" Margin="20 10" Click="Button_Click"/>
+                <Button Content="Отмена" Grid.Column="1" Margin="20 10" Click="Button_Click_1"/>
             </Grid>
         </Grid>
     </Grid>
