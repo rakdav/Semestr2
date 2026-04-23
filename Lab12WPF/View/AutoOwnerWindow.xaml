@@ -42,21 +42,21 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBox Text="{Binding Address.PostalCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="0" Grid.Column="0"
+                    <TextBox Text="{Binding Address.PostalCode}" Grid.Row="0" Grid.Column="0"
                              Margin="10 15"/>
-                    <TextBox Text="{Binding Country}" Grid.Row="1" Grid.Column="0"
+                    <TextBox Text="{Binding Address.Country}" Grid.Row="1" Grid.Column="0"
                         Margin="10 15"/>
-                    <TextBox Text="{Binding Region}" Grid.Row="2" Grid.Column="0"
+                    <TextBox Text="{Binding Address.Region}" Grid.Row="2" Grid.Column="0"
                         Margin="10 15"/>
-                    <TextBox Text="{Binding Area}" Grid.Row="3" Grid.Column="0"
+                    <TextBox Text="{Binding Address.Area}" Grid.Row="3" Grid.Column="0"
                         Margin="10 15"/>
-                    <TextBox Text="{Binding City}" Grid.Row="0" Grid.Column="1"
+                    <TextBox Text="{Binding Address.City}" Grid.Row="0" Grid.Column="1"
                         Margin="10 15"/>
-                    <TextBox Text="{Binding Street}" Grid.Row="1" Grid.Column="1"
+                    <TextBox Text="{Binding Address.Street}" Grid.Row="1" Grid.Column="1"
                         Margin="10 15"/>
-                    <TextBox Text="{Binding Home}" Grid.Row="2" Grid.Column="1"
+                    <TextBox Text="{Binding Address.Home}" Grid.Row="2" Grid.Column="1"
                         Margin="10 15"/>
-                    <TextBox Text="{Binding Department}" Grid.Row="3" Grid.Column="1"
+                    <TextBox Text="{Binding Address.Department}" Grid.Row="3" Grid.Column="1"
                         Margin="10 15"/>
                 </Grid>
             </GroupBox>
