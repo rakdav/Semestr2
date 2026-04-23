@@ -77,15 +77,4 @@ namespace Lab12WPF.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
-    public class HomeAddress
-    {
-        public int PostalCode { get; set; }
-        public string? Country { get; set; }
-        public string? Region { get; set; }
-        public string? Area { get; set; }
-        public string? City { get; set; }
-        public string? Street { get; set; }
-        public int Home { get; set; }
-        public int Department { get; set; }
-    }
 }

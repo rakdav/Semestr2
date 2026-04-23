@@ -23,5 +23,33 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.9*"/>
+                <RowDefinition Height="0.1*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical" 
+                        DataContext="{Binding SelectedOwner}" Margin="10">
+                <TextBlock Text="{Binding StringFormat=ФИО: {0},Path=FIO}" FontSize="18"/>
+                <TextBlock Text="{Binding StringFormat=Телефон: {0},Path=Phone}" FontSize="18"/>
+                <Expander Header="Адрес">
+                    <StackPanel>
+                        <TextBlock Text="{Binding StringFormat=Индекс {0},Path=Address.PostalCode}"/>
+                        <TextBlock Text="{Binding StringFormat=Страна {0},Path=Address.Country}"/>
+                        <TextBlock Text="{Binding StringFormat=Регион {0},Path=Address.Region}"/>
+                        <TextBlock Text="{Binding StringFormat=Район {0},Path=Address.Area}"/>
+                        <TextBlock Text="{Binding StringFormat=Город {0},Path=Address.City}"/>
+                        <TextBlock Text="{Binding StringFormat=Улица {0},Path=Address.Street}"/>
+                        <TextBlock Text="{Binding StringFormat=Дом {0},Path=Address.Home}"/>
+                        <TextBlock Text="{Binding StringFormat=Квартира {0},Path=Address.Department}"/>
+                    </StackPanel>
+                </Expander>
+                <TextBlock Text="{Binding StringFormat=Марка: {0},Path=Marka}" FontSize="18"/>
+                <TextBlock Text="{Binding StringFormat=Номер: {0},Path=Number}" FontSize="18"/>
+                <TextBlock Text="{Binding StringFormat=Техпаспорт: {0},Path=TechPassport}" FontSize="18"/>
+            </StackPanel>
+            <Button Grid.Row="1" Content="Добавить" HorizontalAlignment="Right"
+                    Margin="5"/>
+        </Grid>
     </Grid>
 </Window>
