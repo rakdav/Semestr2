@@ -49,7 +49,7 @@
                 <TextBlock Text="{Binding StringFormat=Техпаспорт: {0},Path=TechPassport}" FontSize="18"/>
             </StackPanel>
             <Button Grid.Row="1" Content="Добавить" HorizontalAlignment="Right"
-                    Margin="5"/>
+                    Margin="5" Command="{Binding AddCommand}"/>
         </Grid>
     </Grid>
 </Window>

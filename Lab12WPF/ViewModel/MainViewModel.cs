@@ -1,4 +1,6 @@
-﻿using Lab12WPF.Model;
+﻿using Lab12WPF.Command;
+using Lab12WPF.Model;
+using Lab12WPF.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -74,7 +76,20 @@ namespace Lab12WPF.ViewModel
         {
 
         }
-
+        #region Commands
+        private RelayCommand addCommand;
+        public RelayCommand AddCommand
+        {
+            get
+            {
+                return addCommand ?? (addCommand = new RelayCommand(obj =>
+                {
+                    AutoOwnerWindow window=new AutoOwnerWindow();
+                    window.Show();
+                }));
+            }
+        }
+        #endregion
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
