@@ -62,7 +62,6 @@ namespace Lab12WPF.ViewModel
                 }
             }
         }
-
         public ObservableCollection<AutoOwner>? AutoOwnersAll { get; set; } = new();
 
         public MainViewModel()
