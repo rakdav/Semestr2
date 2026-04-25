@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.142" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\add.png" />
     <Resource Include="Resources\delete.png" />
     <Resource Include="Resources\edit.png" />

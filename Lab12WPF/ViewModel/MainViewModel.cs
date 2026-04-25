@@ -17,16 +17,27 @@ namespace Lab12WPF.ViewModel
 {
     public class MainViewModel:INotifyPropertyChanged
     {
-        private bool expandVisible;
+        public bool expandVisible= false;
         public bool ExpandVisible
         {
-            get => expandVisible;
+            get => expandVisible!;
             set
             {
                 expandVisible = value;
                 OnPropertyChanged(nameof(ExpandVisible));
             }
         }
+        private string searchText;
+        public string SearchText
+        {
+            get => searchText!;
+            set
+            {
+                searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+            }
+        }
+
         private AutoOwner selectedOwner;
         public AutoOwner SelectedOwner
         {
@@ -38,11 +49,26 @@ namespace Lab12WPF.ViewModel
             }
         }
 
-        public ObservableCollection<AutoOwner>? AutoOwners { get; set; }= new();
+        private ObservableCollection<AutoOwner>? autoOwners;
+        public ObservableCollection<AutoOwner> AutoOwners
+        {
+            get { return autoOwners!; }
+            set
+            {
+                if (autoOwners != value)
+                {
+                    autoOwners = value;
+                    OnPropertyChanged(nameof(AutoOwners));
+                }
+            }
+        }
+
+        public ObservableCollection<AutoOwner>? AutoOwnersAll { get; set; } = new();
 
         public MainViewModel()
         {
-            ExpandVisible=false;
+           AutoOwners=new ObservableCollection<AutoOwner>();
+           ExpandVisible =false;
         }
         #region Commands
         private RelayCommand addCommand;
@@ -153,8 +179,27 @@ namespace Lab12WPF.ViewModel
                                 owner.Number = mas[11];
                                 owner.TechPassport = mas[12];
                                 AutoOwners!.Add(owner);
+                                AutoOwnersAll!.Add(owner);
                             }
                         }
+                    }
+                }));
+            }
+        }
+        private RelayCommand searchCommand;
+        public RelayCommand SearchCommand
+        {
+            get
+            {
+                return searchCommand ?? (searchCommand = new RelayCommand(obj =>
+                {
+                    if (String.IsNullOrEmpty(SearchText))
+                    {
+                        AutoOwners = new ObservableCollection<AutoOwner>(AutoOwnersAll!);
+                    }
+                    else
+                    {
+                        AutoOwners =new ObservableCollection<AutoOwner> (AutoOwners!.Where(p => p.Marka.StartsWith(SearchText)).ToList());
                     }
                 }));
             }

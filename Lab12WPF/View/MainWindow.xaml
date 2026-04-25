@@ -4,12 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab12WPF"
+        xmlns:converters="clr-namespace:Lab12WPF.Converters"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="Вариант 6" Height="450" Width="800">
+    <Window.Resources>
+        <converters:InverseBooleanToVisibilityConverter x:Key="CollapseConv"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"/>
             <RowDefinition Height="0.9*"/>
+            <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.6*"/>
@@ -45,7 +51,8 @@
                         DataContext="{Binding SelectedOwner}" Margin="10">
                 <TextBlock Text="{Binding StringFormat=ФИО: {0},Path=FIO}" FontSize="18"/>
                 <TextBlock Text="{Binding StringFormat=Телефон: {0},Path=Phone}" FontSize="18"/>
-                <Expander Header="Адрес" Visibility="{Binding ExpandVisible}">
+                <Expander Header="Адрес"
+                          Visibility="{Binding ExpandVisible,Converter={StaticResource CollapseConv}}">
                     <StackPanel>
                         <TextBlock Text="{Binding StringFormat=Индекс {0},Path=Address.PostalCode}"/>
                         <TextBlock Text="{Binding StringFormat=Страна {0},Path=Address.Country}"/>
@@ -76,7 +83,15 @@
                     <Image Source="/Resources/delete.png"/>
                 </Button>
             </StackPanel>
-            
         </Grid>
+        <TextBox Grid.Row="2" Grid.Column="0" Margin="10 5" 
+                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction
+                        Command="{Binding SearchCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
     </Grid>
 </Window>
