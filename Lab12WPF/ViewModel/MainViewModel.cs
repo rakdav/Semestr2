@@ -17,7 +17,17 @@ namespace Lab12WPF.ViewModel
 {
     public class MainViewModel:INotifyPropertyChanged
     {
-        private AutoOwner? selectedOwner;
+        private bool expandVisible;
+        public bool ExpandVisible
+        {
+            get => expandVisible;
+            set
+            {
+                expandVisible = value;
+                OnPropertyChanged(nameof(ExpandVisible));
+            }
+        }
+        private AutoOwner selectedOwner;
         public AutoOwner SelectedOwner
         {
             get => selectedOwner!;
@@ -27,56 +37,12 @@ namespace Lab12WPF.ViewModel
                 OnPropertyChanged(nameof(SelectedOwner));
             }
         }
+
         public ObservableCollection<AutoOwner>? AutoOwners { get; set; }= new();
 
         public MainViewModel()
         {
-            //AutoOwners = new ObservableCollection<AutoOwner>()
-            //{
-            //    new AutoOwner()
-            //    {
-            //        FIO="Никитин Никитос Никитич",
-            //        Marka="Мерседес",
-            //        Phone="+79557854387",
-            //        Number="в567ru39",
-            //        TechPassport="ту678a",
-            //        Address=new HomeAddress()
-            //        {
-            //            PostalCode=896756,
-            //            City="Москва",
-            //            Area="город Москва",
-            //            Department=4,
-            //            Country="Россия",
-            //            Home=12,
-            //            Region="Москвовская область",
-            //            Street="Моховая"
-            //        }
-            //    },
-            //     new AutoOwner()
-            //    {
-            //        FIO="Игого",
-            //        Marka="Лошадь",
-            //        Phone="+79557854387",
-            //        Number="в567ru39",
-            //        TechPassport="ту678a",
-            //        Address=new HomeAddress()
-            //        {
-            //            PostalCode=896756,
-            //            City="Москва",
-            //            Area="город Москва",
-            //            Department=4,
-            //            Country="Россия",
-            //            Home=12,
-            //            Region="Москвовская область",
-            //            Street="Моховая"
-            //        }
-            //    }
-            //};
-            Load();
-        }
-        private async void Load()
-        {
-
+            ExpandVisible=false;
         }
         #region Commands
         private RelayCommand addCommand;
@@ -146,10 +112,48 @@ namespace Lab12WPF.ViewModel
                     if (saveDialog.ShowDialog() == true)
                     {
                         string Filepath=saveDialog.FileName;
-                        using (StreamWriter writer=new StreamWriter(Filepath,true))
+                        using (StreamWriter writer=new StreamWriter(Filepath,false))
                         {
                             foreach(AutoOwner owner in AutoOwners!)
                             writer.WriteLineAsync(owner!.ToString());
+                        }
+                    }
+                }));
+            }
+        }
+        private RelayCommand openCommand;
+        public RelayCommand OpenCommand
+        {
+            get
+            {
+                return openCommand ?? (openCommand = new RelayCommand(async obj =>
+                {
+                    OpenFileDialog openDialog = new OpenFileDialog();
+                    if (openDialog.ShowDialog() == true)
+                    {
+                        string Filepath = openDialog.FileName;
+                        using (StreamReader reader=new StreamReader(Filepath))
+                        {
+                            string? line;
+                            while((line=await reader.ReadLineAsync())!=null)
+                            {
+                                string[] mas=line.Split(',');
+                                AutoOwner owner=new AutoOwner();
+                                owner.FIO = mas[0];
+                                owner.Phone = mas[1];
+                                owner.Address.PostalCode = int.Parse(mas[2]);
+                                owner.Address.Country = mas[3];
+                                owner.Address.Region=mas[4];
+                                owner.Address.City=mas[5];
+                                owner.Address.Area = mas[6];
+                                owner.Address.Street=mas[7];
+                                owner.Address.Home = int.Parse(mas[8]);
+                                owner.Address.Department=int.Parse(mas[9]);
+                                owner.Marka = mas[10];
+                                owner.Number = mas[11];
+                                owner.TechPassport = mas[12];
+                                AutoOwners!.Add(owner);
+                            }
                         }
                     }
                 }));

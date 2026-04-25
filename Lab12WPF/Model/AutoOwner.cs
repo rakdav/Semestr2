@@ -73,9 +73,9 @@ namespace Lab12WPF.Model
 
         public override string? ToString()
         {
-            return $"{FIO} {Phone} {Address.PostalCode} {Address.Country} " +
-                $"{Address.Region} {Address.Area} {Address.City} {Address.Street} {Address.Home} {Address.Department} " +
-                $"{Marka} {Number} {TechPassport}";
+            return $"{FIO},{Phone},{Address.PostalCode},{Address.Country}," +
+                $"{Address.Region},{Address.Area},{Address.City},{Address.Street},{Address.Home},{Address.Department}," +
+                $"{Marka},{Number},{TechPassport}";
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

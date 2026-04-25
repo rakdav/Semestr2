@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
         <Menu Height="40" FontSize="20" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
             <MenuItem Header="Файл">
-                <MenuItem Header="Открыть ..." />
+                <MenuItem Header="Открыть ..." Command="{Binding OpenCommand}"/>
                 <MenuItem Header="Сохранить"/>
                 <MenuItem Header="Сохранить как ..." Command="{Binding SaveCommand}"/>
                 <Separator />
@@ -45,7 +45,7 @@
                         DataContext="{Binding SelectedOwner}" Margin="10">
                 <TextBlock Text="{Binding StringFormat=ФИО: {0},Path=FIO}" FontSize="18"/>
                 <TextBlock Text="{Binding StringFormat=Телефон: {0},Path=Phone}" FontSize="18"/>
-                <Expander Header="Адрес">
+                <Expander Header="Адрес" Visibility="{Binding ExpandVisible}">
                     <StackPanel>
                         <TextBlock Text="{Binding StringFormat=Индекс {0},Path=Address.PostalCode}"/>
                         <TextBlock Text="{Binding StringFormat=Страна {0},Path=Address.Country}"/>
