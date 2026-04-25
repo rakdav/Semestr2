@@ -17,13 +17,13 @@ namespace Lab12WPF.ViewModel
 {
     public class MainViewModel:INotifyPropertyChanged
     {
-        public bool expandVisible= false;
-        public bool ExpandVisible
+        private Visibility _expandVisible;
+        public Visibility ExpandVisible
         {
-            get => expandVisible!;
+            get => _expandVisible;
             set
             {
-                expandVisible = value;
+                _expandVisible = value;
                 OnPropertyChanged(nameof(ExpandVisible));
             }
         }
@@ -45,6 +45,10 @@ namespace Lab12WPF.ViewModel
             set
             {
                 selectedOwner = value;
+                if (selectedOwner != null)
+                {
+                    ExpandVisible = Visibility.Visible;
+                }
                 OnPropertyChanged(nameof(SelectedOwner));
             }
         }
@@ -67,7 +71,7 @@ namespace Lab12WPF.ViewModel
         public MainViewModel()
         {
            AutoOwners=new ObservableCollection<AutoOwner>();
-           ExpandVisible =false;
+           ExpandVisible =Visibility.Hidden;
         }
         #region Commands
         private RelayCommand addCommand;
