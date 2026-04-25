@@ -13,10 +13,10 @@ namespace OSLab1.ViewModel
     public class MainViewModel
     {
         private CancellationTokenSource _cancelToken = new CancellationTokenSource();
-        public MainWindow? MainWindow {  get; set; }
+        private MainWindow? mainWindow;
         public MainViewModel(MainWindow _mainWindow) 
         {
-            MainWindow = _mainWindow;
+            mainWindow = _mainWindow;
         }
         #region Commands
         private RelayCommand processCommand;
@@ -54,17 +54,15 @@ namespace OSLab1.ViewModel
             if (Directory.Exists(outputDirectory)) Directory.Delete(outputDirectory, true);
             Directory.CreateDirectory(outputDirectory);
             string[] files = Directory.GetFiles(pictureDirectory, "*.jpg", SearchOption.AllDirectories);
-            //foreach (string file in files)
             try
             {
                 Parallel.ForEach(files, file =>
                 {
                     parOpts.CancellationToken.ThrowIfCancellationRequested();
                     string filename = Path.GetFileName(file);
-                    //this.Title = $"Процесс {filename} в потоке {Thread.CurrentThread.ManagedThreadId}";
-                    MainWindow!.Dispatcher?.Invoke(() =>
+                    mainWindow!.Dispatcher?.Invoke(() =>
                     {
-                        MainWindow.Title = $"Процесс {file}";
+                        mainWindow.Title = $"Процесс {filename}";
                     });
                     using (Bitmap bitmap = new Bitmap(file))
                     {
@@ -72,11 +70,11 @@ namespace OSLab1.ViewModel
                         bitmap.Save(Path.Combine(outputDirectory, filename));
                     }
                 });
-                MainWindow!.Dispatcher?.Invoke(() => { MainWindow.Title = "Завершено!"; });
+                mainWindow!.Dispatcher?.Invoke(() => { mainWindow.Title = "Завершено!"; });
             }
             catch (OperationCanceledException ex)
             {
-                MainWindow!.Dispatcher?.Invoke(() => { MainWindow.Title = ex.Message; });
+                mainWindow!.Dispatcher?.Invoke(() => { mainWindow.Title = ex.Message; });
             }
         }
         #endregion
