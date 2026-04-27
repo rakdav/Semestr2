@@ -146,6 +146,21 @@ using System.Text;
 //{
 //    tcpClient.Close();
 //}
+//using var tcpClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+//try
+//{
+//    await tcpClient.ConnectAsync(IPAddress.Parse("192.168.122.139"), 8888);
+//    byte[] data = new byte[512];
+//    // получаем данные из потока
+//    int bytes = await tcpClient.ReceiveAsync(data);
+//    // получаем отправленное время
+//    string time = Encoding.UTF8.GetString(data, 0, bytes);
+//    Console.WriteLine($"Текущее время: {time}");
+//}
+//catch(Exception ex)
+//{
+//    Console.WriteLine(ex.Message);
+//}
 #endregion
 
 #region TCPServer
