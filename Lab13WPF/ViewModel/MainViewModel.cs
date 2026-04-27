@@ -148,14 +148,16 @@ namespace Lab13WPF.ViewModel
                             {
                                 writer.Write(item.FIO);
                                 writer.Write(item.Phone);
-                                writer.Write(item.Address.PostalCode.ToString()!);
+
+                                writer.Write(item.Address.PostalCode??0);
                                 writer.Write(item.Address.Country!);
                                 writer.Write(item.Address.Region!);
                                 writer.Write(item.Address.Area!);
                                 writer.Write(item.Address.City!);
                                 writer.Write(item.Address.Street!);
-                                writer.Write(item.Address.Home.ToString()!);
-                                writer.Write(item.Address.Department.ToString()!);
+                                writer.Write(item.Address.Home??0);
+                                writer.Write(item.Address.Department??0);
+
                                 writer.Write(item.Marka);
                                 writer.Write(item.Number);
                                 writer.Write(item.TechPassport);
@@ -178,7 +180,53 @@ namespace Lab13WPF.ViewModel
                     if (openDialog.ShowDialog() == true)
                     {
                         string Filepath = openDialog.FileName;
-                        
+                        using (BinaryReader reader=new BinaryReader(File.Open(Filepath, FileMode.Open)))
+                        {
+                            try
+                            {
+                                while (reader.PeekChar() > -1)
+                                {
+                                    string fio = reader.ReadString();
+                                    string phone = reader.ReadString();
+
+                                    int postalCode = reader.ReadInt32();
+                                    string country = reader.ReadString();
+                                    string region = reader.ReadString();
+                                    string area = reader.ReadString();
+                                    string city = reader.ReadString();
+                                    string street = reader.ReadString();
+                                    int home = reader.ReadInt32();
+                                    int department = reader.ReadInt32();
+
+                                    string marka = reader.ReadString();
+                                    string number = reader.ReadString();
+                                    string techPassport = reader.ReadString();
+                                    HomeAddress homeAddress = new HomeAddress()
+                                    {
+                                        Area = area,
+                                        City = city,
+                                        Home = home,
+                                        Department = department,
+                                        Street = street,
+                                        PostalCode = postalCode,
+                                        Country = country,
+                                        Region = region
+                                    };
+                                    AutoOwner autoOwner = new AutoOwner()
+                                    {
+                                        FIO = fio,
+                                        Phone = phone,
+                                        Address = homeAddress,
+                                        Marka = marka,
+                                        Number = number,
+                                        TechPassport = techPassport
+                                    };
+                                    AutoOwners.Add(autoOwner);
+                                    AutoOwnersAll!.Add(autoOwner);
+                                }
+                            }
+                            catch (IOException ex) { }
+                        }
                     }
                 }));
             }
