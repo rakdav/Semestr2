@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLab1", "OSLab1\OSLab1.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab13WPF", "Lab13WPF\Lab13WPF.csproj", "{D498AEDD-678C-4E86-ACB8-A4C8203240CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "net2", "net2\net2.csproj", "{AAE208BC-F41E-4FEE-B10B-76C8A2A9DEDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{D498AEDD-678C-4E86-ACB8-A4C8203240CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D498AEDD-678C-4E86-ACB8-A4C8203240CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D498AEDD-678C-4E86-ACB8-A4C8203240CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE208BC-F41E-4FEE-B10B-76C8A2A9DEDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE208BC-F41E-4FEE-B10B-76C8A2A9DEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE208BC-F41E-4FEE-B10B-76C8A2A9DEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE208BC-F41E-4FEE-B10B-76C8A2A9DEDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

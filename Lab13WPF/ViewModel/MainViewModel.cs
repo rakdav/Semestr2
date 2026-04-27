@@ -262,19 +262,9 @@ namespace Lab13WPF.ViewModel
             {
                 return exitCommand ?? (exitCommand = new RelayCommand(obj =>
                 {
-                   mainWindow.Close();
-                }));
-            }
-        }
-        private RelayCommand saveCommand;
-        public RelayCommand SaveCommand
-        {
-            get
-            {
-                return saveCommand ?? (saveCommand = new RelayCommand(obj =>
-                {
-                    if (MessageBox.Show("Вы действительно хотите закрыть?", "Внимание", MessageBoxButton.YesNo,
-                           MessageBoxImage.Warning) == MessageBoxResult.Yes)
+
+                    if (MessageBox.Show("Сохранить изменения в файле?", "Внимание", MessageBoxButton.YesNo,
+                            MessageBoxImage.Warning) == MessageBoxResult.Yes)
                     {
                         if (FilePath == null)
                         {
@@ -331,6 +321,73 @@ namespace Lab13WPF.ViewModel
                                 }
                                 MessageBox.Show("Данные успешно сохранены!");
                             }
+                        }
+                    }
+                    mainWindow.Close();
+                }));
+            }
+        }
+        private RelayCommand saveCommand;
+        public RelayCommand SaveCommand
+        {
+            get
+            {
+                return saveCommand ?? (saveCommand = new RelayCommand(obj =>
+                {
+                    if (FilePath == null)
+                    {
+                        SaveFileDialog saveDialog = new SaveFileDialog();
+                        saveDialog.Filter = "Data files(*.dat)|*.dat|(All Files(*.*))|*.*";
+                        if (saveDialog.ShowDialog() == true)
+                        {
+                            FilePath = saveDialog.FileName;
+                            using (BinaryWriter writer = new BinaryWriter(File.Open(FilePath, FileMode.OpenOrCreate)))
+                            {
+                                foreach (AutoOwner item in AutoOwners)
+                                {
+                                    writer.Write(item.FIO);
+                                    writer.Write(item.Phone);
+
+                                    writer.Write(item.Address.PostalCode ?? 0);
+                                    writer.Write(item.Address.Country!);
+                                    writer.Write(item.Address.Region!);
+                                    writer.Write(item.Address.Area!);
+                                    writer.Write(item.Address.City!);
+                                    writer.Write(item.Address.Street!);
+                                    writer.Write(item.Address.Home ?? 0);
+                                    writer.Write(item.Address.Department ?? 0);
+
+                                    writer.Write(item.Marka);
+                                    writer.Write(item.Number);
+                                    writer.Write(item.TechPassport);
+                                }
+                                MessageBox.Show("Данные успешно сохранены!");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        using (BinaryWriter writer = new BinaryWriter(File.Open(FilePath, FileMode.Open)))
+                        {
+                            foreach (AutoOwner item in AutoOwners)
+                            {
+                                writer.Write(item.FIO);
+                                writer.Write(item.Phone);
+
+                                writer.Write(item.Address.PostalCode ?? 0);
+                                writer.Write(item.Address.Country!);
+                                writer.Write(item.Address.Region!);
+                                writer.Write(item.Address.Area!);
+                                writer.Write(item.Address.City!);
+                                writer.Write(item.Address.Street!);
+                                writer.Write(item.Address.Home ?? 0);
+                                writer.Write(item.Address.Department ?? 0);
+
+                                writer.Write(item.Marka);
+                                writer.Write(item.Number);
+                                writer.Write(item.TechPassport);
+                            }
+                            MessageBox.Show("Данные успешно сохранены!");
                         }
                     }
                 }));
