@@ -1,6 +1,6 @@
-﻿using Lab12WPF.Command;
-using Lab12WPF.Model;
-using Lab12WPF.View;
+﻿using Lab13WPF.Command;
+using Lab13WPF.Model;
+using Lab13WPF.View;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Lab12WPF.ViewModel
+namespace Lab13WPF.ViewModel
 {
     public class MainViewModel:INotifyPropertyChanged
     {
@@ -138,15 +138,11 @@ namespace Lab12WPF.ViewModel
                 return saveCommand ?? (saveCommand = new RelayCommand(obj =>
                 {
                     SaveFileDialog saveDialog = new SaveFileDialog();
-                    saveDialog.Filter = "Text files(*.txt)|*.txt|(All Files(*.*))|*.*";
+                    saveDialog.Filter = "Data files(*.dat)|*.dat|(All Files(*.*))|*.*";
                     if (saveDialog.ShowDialog() == true)
                     {
                         string Filepath=saveDialog.FileName;
-                        using (StreamWriter writer=new StreamWriter(Filepath,false))
-                        {
-                            foreach(AutoOwner owner in AutoOwners!)
-                            writer.WriteLineAsync(owner!.ToString());
-                        }
+                       
                     }
                 }));
             }
@@ -159,34 +155,11 @@ namespace Lab12WPF.ViewModel
                 return openCommand ?? (openCommand = new RelayCommand(async obj =>
                 {
                     OpenFileDialog openDialog = new OpenFileDialog();
-                    openDialog.Filter = "Text files(*.txt)|*.txt|(All Files(*.*))|*.*";
+                    openDialog.Filter = "Data files(*.dat)|*.dat|(All Files(*.*))|*.*";
                     if (openDialog.ShowDialog() == true)
                     {
                         string Filepath = openDialog.FileName;
-                        using (StreamReader reader=new StreamReader(Filepath))
-                        {
-                            string? line;
-                            while((line=await reader.ReadLineAsync())!=null)
-                            {
-                                string[] mas=line.Split(',');
-                                AutoOwner owner=new AutoOwner();
-                                owner.FIO = mas[0];
-                                owner.Phone = mas[1];
-                                owner.Address.PostalCode = int.Parse(mas[2]);
-                                owner.Address.Country = mas[3];
-                                owner.Address.Region=mas[4];
-                                owner.Address.City=mas[5];
-                                owner.Address.Area = mas[6];
-                                owner.Address.Street=mas[7];
-                                owner.Address.Home = int.Parse(mas[8]);
-                                owner.Address.Department=int.Parse(mas[9]);
-                                owner.Marka = mas[10];
-                                owner.Number = mas[11];
-                                owner.TechPassport = mas[12];
-                                AutoOwners!.Add(owner);
-                                AutoOwnersAll!.Add(owner);
-                            }
-                        }
+                        
                     }
                 }));
             }

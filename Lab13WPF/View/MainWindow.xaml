@@ -1,0 +1,92 @@
+﻿<Window x:Class="Lab13WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab13WPF"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.9*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.6*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Menu Height="40" FontSize="20" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Открыть ..." Command="{Binding OpenCommand}"/>
+                <MenuItem Header="Сохранить"/>
+                <MenuItem Header="Сохранить как ..." Command="{Binding SaveCommand}"/>
+                <Separator />
+                <MenuItem Header="Выход"/>
+            </MenuItem>
+        </Menu>
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding AutoOwners}"
+             SelectedItem="{Binding SelectedOwner}" Margin="5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="18" Text="{Binding FIO}"/>
+                        <TextBlock FontSize="14" Text="{Binding Phone}"/>
+                        <TextBlock FontSize="14" Text="{Binding Marka}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Column="1" Grid.Row="1" Visibility="{Binding ExpandVisible}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.9*"/>
+                <RowDefinition Height="0.1*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical" 
+                    DataContext="{Binding SelectedOwner}" Margin="10">
+                <TextBlock Text="{Binding StringFormat=ФИО: {0},Path=FIO}" FontSize="18"/>
+                <TextBlock Text="{Binding StringFormat=Телефон: {0},Path=Phone}" FontSize="18"/>
+                <Expander Header="Адрес">
+                    <StackPanel>
+                        <TextBlock Text="{Binding StringFormat=Индекс {0},Path=Address.PostalCode}"/>
+                        <TextBlock Text="{Binding StringFormat=Страна {0},Path=Address.Country}"/>
+                        <TextBlock Text="{Binding StringFormat=Регион {0},Path=Address.Region}"/>
+                        <TextBlock Text="{Binding StringFormat=Район {0},Path=Address.Area}"/>
+                        <TextBlock Text="{Binding StringFormat=Город {0},Path=Address.City}"/>
+                        <TextBlock Text="{Binding StringFormat=Улица {0},Path=Address.Street}"/>
+                        <TextBlock Text="{Binding StringFormat=Дом {0},Path=Address.Home}"/>
+                        <TextBlock Text="{Binding StringFormat=Квартира {0},Path=Address.Department}"/>
+                    </StackPanel>
+                </Expander>
+                <TextBlock Text="{Binding StringFormat=Марка: {0},Path=Marka}" FontSize="18"/>
+                <TextBlock Text="{Binding StringFormat=Номер: {0},Path=Number}" FontSize="18"/>
+                <TextBlock Text="{Binding StringFormat=Техпаспорт: {0},Path=TechPassport}" FontSize="18"/>
+
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+                <Button Margin="5" Command="{Binding AddCommand}">
+                    <Image Source="/Resources/add.png"/>
+                </Button>
+                <Button Margin="5" Command="{Binding EditCommand}"
+                    CommandParameter="{Binding SelectedOwner}">
+                    <Image Source="/Resources/edit.png"/>
+                </Button>
+                <Button Margin="5" Command="{Binding DeleteCommand}"
+                    CommandParameter="{Binding SelectedOwner}">
+                    <Image Source="/Resources/delete.png"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <TextBox Grid.Row="2" Grid.Column="0" Margin="5" 
+             Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction
+                    Command="{Binding SearchCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+    </Grid>
+</Window>
