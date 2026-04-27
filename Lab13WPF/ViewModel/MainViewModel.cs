@@ -142,7 +142,26 @@ namespace Lab13WPF.ViewModel
                     if (saveDialog.ShowDialog() == true)
                     {
                         string Filepath=saveDialog.FileName;
-                       
+                        using (BinaryWriter writer=new BinaryWriter(File.Open(Filepath,FileMode.OpenOrCreate)))
+                        {
+                           foreach(AutoOwner item in AutoOwners)
+                            {
+                                writer.Write(item.FIO);
+                                writer.Write(item.Phone);
+                                writer.Write(item.Address.PostalCode.ToString()!);
+                                writer.Write(item.Address.Country!);
+                                writer.Write(item.Address.Region!);
+                                writer.Write(item.Address.Area!);
+                                writer.Write(item.Address.City!);
+                                writer.Write(item.Address.Street!);
+                                writer.Write(item.Address.Home.ToString()!);
+                                writer.Write(item.Address.Department.ToString()!);
+                                writer.Write(item.Marka);
+                                writer.Write(item.Number);
+                                writer.Write(item.TechPassport);
+                            }
+                            MessageBox.Show("Данные успешно сохранены!");
+                        }
                     }
                 }));
             }

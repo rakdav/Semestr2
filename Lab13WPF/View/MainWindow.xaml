@@ -6,11 +6,12 @@
         xmlns:local="clr-namespace:Lab13WPF"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"/>
             <RowDefinition Height="0.9*"/>
+            <RowDefinition Height="0.1*"/>
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -26,7 +27,7 @@
                 <MenuItem Header="Выход"/>
             </MenuItem>
         </Menu>
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding AutoOwners}"
+        <ListBox Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding AutoOwners}"
              SelectedItem="{Binding SelectedOwner}" Margin="5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -62,24 +63,23 @@
                 <TextBlock Text="{Binding StringFormat=Марка: {0},Path=Marka}" FontSize="18"/>
                 <TextBlock Text="{Binding StringFormat=Номер: {0},Path=Number}" FontSize="18"/>
                 <TextBlock Text="{Binding StringFormat=Техпаспорт: {0},Path=TechPassport}" FontSize="18"/>
-
-            </StackPanel>
-            <StackPanel Grid.Row="1" Orientation="Horizontal"
-                    HorizontalAlignment="Right">
-                <Button Margin="5" Command="{Binding AddCommand}">
-                    <Image Source="/Resources/add.png"/>
-                </Button>
-                <Button Margin="5" Command="{Binding EditCommand}"
-                    CommandParameter="{Binding SelectedOwner}">
-                    <Image Source="/Resources/edit.png"/>
-                </Button>
-                <Button Margin="5" Command="{Binding DeleteCommand}"
-                    CommandParameter="{Binding SelectedOwner}">
-                    <Image Source="/Resources/delete.png"/>
-                </Button>
             </StackPanel>
         </Grid>
-        <TextBox Grid.Row="2" Grid.Column="0" Margin="5" 
+        <StackPanel Grid.Row="2" Orientation="Horizontal"
+         HorizontalAlignment="Right" Grid.Column="1">
+            <Button Margin="5" Command="{Binding AddCommand}">
+                <Image Source="/Resources/add.png"/>
+            </Button>
+            <Button Margin="5" Command="{Binding EditCommand}"
+         CommandParameter="{Binding SelectedOwner}">
+                <Image Source="/Resources/edit.png"/>
+            </Button>
+            <Button Margin="5" Command="{Binding DeleteCommand}"
+         CommandParameter="{Binding SelectedOwner}">
+                <Image Source="/Resources/delete.png"/>
+            </Button>
+        </StackPanel>
+        <TextBox Grid.Row="3" Grid.Column="0" Margin="5" 
              Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="TextChanged">
