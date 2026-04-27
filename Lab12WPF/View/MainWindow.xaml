@@ -23,7 +23,7 @@
                 <MenuItem Header="Сохранить"/>
                 <MenuItem Header="Сохранить как ..." Command="{Binding SaveCommand}"/>
                 <Separator />
-                <MenuItem Header="Выход"/>
+                <MenuItem Header="Выход" Command="{Binding ExitCommand}"/>
             </MenuItem>
         </Menu>
         <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding AutoOwners}"

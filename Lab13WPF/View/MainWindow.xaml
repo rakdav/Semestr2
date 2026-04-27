@@ -21,10 +21,10 @@
         <Menu Height="40" FontSize="20" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
             <MenuItem Header="Файл">
                 <MenuItem Header="Открыть ..." Command="{Binding OpenCommand}"/>
-                <MenuItem Header="Сохранить"/>
-                <MenuItem Header="Сохранить как ..." Command="{Binding SaveCommand}"/>
+                <MenuItem Header="Сохранить" Command="{Binding SaveCommand}"/>
+                <MenuItem Header="Сохранить как ..." Command="{Binding SaveAsCommand}"/>
                 <Separator />
-                <MenuItem Header="Выход"/>
+                <MenuItem Header="Выход" Command="{Binding ExitCommand}"/>
             </MenuItem>
         </Menu>
         <ListBox Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding AutoOwners}"

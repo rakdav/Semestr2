@@ -17,6 +17,8 @@ namespace Lab13WPF.ViewModel
 {
     public class MainViewModel:INotifyPropertyChanged
     {
+        private MainWindow mainWindow;
+        private string FilePath;
         private Visibility _expandVisible;
         public Visibility ExpandVisible
         {
@@ -68,10 +70,12 @@ namespace Lab13WPF.ViewModel
         }
         public ObservableCollection<AutoOwner>? AutoOwnersAll { get; set; } = new();
 
-        public MainViewModel()
+        public MainViewModel(MainWindow _mainWindow)
         {
-           AutoOwners=new ObservableCollection<AutoOwner>();
-           ExpandVisible =Visibility.Hidden;
+            AutoOwners = new ObservableCollection<AutoOwner>();
+            ExpandVisible = Visibility.Hidden;
+            mainWindow = _mainWindow;
+            mainWindow.Title = "Лабораторная работа #13";
         }
         #region Commands
         private RelayCommand addCommand;
@@ -82,6 +86,7 @@ namespace Lab13WPF.ViewModel
                 return addCommand ?? (addCommand = new RelayCommand(obj =>
                 {
                     AutoOwnerWindow window=new AutoOwnerWindow(new AutoOwner());
+                    window.Title = "Создание";
                     if (window.ShowDialog() == true)
                     {
                         AutoOwner newAutoOwner=window.AutoOwner;
@@ -102,6 +107,7 @@ namespace Lab13WPF.ViewModel
                     if(owner != null)
                     {
                         AutoOwnerWindow window = new AutoOwnerWindow(owner);
+                        window.Title = "Редактирование";
                         if (window.ShowDialog() == true)
                         {
                             int index = AutoOwners!.IndexOf(owner);
@@ -130,19 +136,19 @@ namespace Lab13WPF.ViewModel
                 }));
             }
         }
-        private RelayCommand saveCommand;
-        public RelayCommand SaveCommand
+        private RelayCommand saveAsCommand;
+        public RelayCommand SaveAsCommand
         {
             get
             {
-                return saveCommand ?? (saveCommand = new RelayCommand(obj =>
+                return saveAsCommand ?? (saveAsCommand = new RelayCommand(obj =>
                 {
                     SaveFileDialog saveDialog = new SaveFileDialog();
                     saveDialog.Filter = "Data files(*.dat)|*.dat|(All Files(*.*))|*.*";
                     if (saveDialog.ShowDialog() == true)
                     {
-                        string Filepath=saveDialog.FileName;
-                        using (BinaryWriter writer=new BinaryWriter(File.Open(Filepath,FileMode.OpenOrCreate)))
+                        FilePath=saveDialog.FileName;
+                        using (BinaryWriter writer=new BinaryWriter(File.Open(FilePath,FileMode.OpenOrCreate)))
                         {
                            foreach(AutoOwner item in AutoOwners)
                             {
@@ -179,8 +185,8 @@ namespace Lab13WPF.ViewModel
                     openDialog.Filter = "Data files(*.dat)|*.dat|(All Files(*.*))|*.*";
                     if (openDialog.ShowDialog() == true)
                     {
-                        string Filepath = openDialog.FileName;
-                        using (BinaryReader reader=new BinaryReader(File.Open(Filepath, FileMode.Open)))
+                        FilePath = openDialog.FileName;
+                        using (BinaryReader reader=new BinaryReader(File.Open(FilePath, FileMode.Open)))
                         {
                             try
                             {
@@ -245,6 +251,87 @@ namespace Lab13WPF.ViewModel
                     else
                     {
                         AutoOwners =new ObservableCollection<AutoOwner> (AutoOwners!.Where(p => p.Marka.StartsWith(SearchText)).ToList());
+                    }
+                }));
+            }
+        }
+        private RelayCommand exitCommand;
+        public RelayCommand ExitCommand
+        {
+            get
+            {
+                return exitCommand ?? (exitCommand = new RelayCommand(obj =>
+                {
+                   mainWindow.Close();
+                }));
+            }
+        }
+        private RelayCommand saveCommand;
+        public RelayCommand SaveCommand
+        {
+            get
+            {
+                return saveCommand ?? (saveCommand = new RelayCommand(obj =>
+                {
+                    if (MessageBox.Show("Вы действительно хотите закрыть?", "Внимание", MessageBoxButton.YesNo,
+                           MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    {
+                        if (FilePath == null)
+                        {
+                            SaveFileDialog saveDialog = new SaveFileDialog();
+                            saveDialog.Filter = "Data files(*.dat)|*.dat|(All Files(*.*))|*.*";
+                            if (saveDialog.ShowDialog() == true)
+                            {
+                                FilePath = saveDialog.FileName;
+                                using (BinaryWriter writer = new BinaryWriter(File.Open(FilePath, FileMode.OpenOrCreate)))
+                                {
+                                    foreach (AutoOwner item in AutoOwners)
+                                    {
+                                        writer.Write(item.FIO);
+                                        writer.Write(item.Phone);
+
+                                        writer.Write(item.Address.PostalCode ?? 0);
+                                        writer.Write(item.Address.Country!);
+                                        writer.Write(item.Address.Region!);
+                                        writer.Write(item.Address.Area!);
+                                        writer.Write(item.Address.City!);
+                                        writer.Write(item.Address.Street!);
+                                        writer.Write(item.Address.Home ?? 0);
+                                        writer.Write(item.Address.Department ?? 0);
+
+                                        writer.Write(item.Marka);
+                                        writer.Write(item.Number);
+                                        writer.Write(item.TechPassport);
+                                    }
+                                    MessageBox.Show("Данные успешно сохранены!");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            using (BinaryWriter writer = new BinaryWriter(File.Open(FilePath, FileMode.Open)))
+                            {
+                                foreach (AutoOwner item in AutoOwners)
+                                {
+                                    writer.Write(item.FIO);
+                                    writer.Write(item.Phone);
+
+                                    writer.Write(item.Address.PostalCode ?? 0);
+                                    writer.Write(item.Address.Country!);
+                                    writer.Write(item.Address.Region!);
+                                    writer.Write(item.Address.Area!);
+                                    writer.Write(item.Address.City!);
+                                    writer.Write(item.Address.Street!);
+                                    writer.Write(item.Address.Home ?? 0);
+                                    writer.Write(item.Address.Department ?? 0);
+
+                                    writer.Write(item.Marka);
+                                    writer.Write(item.Number);
+                                    writer.Write(item.TechPassport);
+                                }
+                                MessageBox.Show("Данные успешно сохранены!");
+                            }
+                        }
                     }
                 }));
             }

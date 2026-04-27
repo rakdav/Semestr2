@@ -20,7 +20,7 @@ namespace Lab13WPF
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new MainViewModel(this);
         }
     }
 }
