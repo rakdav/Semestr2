@@ -159,22 +159,117 @@ using System.Text;
 //{
 //    Console.WriteLine(ex.Message);
 //}
+
+//using TcpClient tcpClient=new TcpClient();
+//Console.WriteLine("Клиент запущен");
+//await tcpClient.ConnectAsync("192.168.122.139", 8888);
+//if(tcpClient.Connected)
+//    Console.WriteLine($"Подключение с {tcpClient.Client.RemoteEndPoint} установлено");
+//else
+//    Console.WriteLine("Не удалось подключиться");
+
+//while (true)
+//{
+//    Console.Clear();
+//    using var tcpClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+//    try
+//    {
+//        await tcpClient.ConnectAsync("192.168.122.139", 8888);
+//        byte[] data = new byte[512];
+//        int bytes = await tcpClient.ReceiveAsync(data);
+//        string time = Encoding.UTF8.GetString(data, 0, bytes);
+//        Console.WriteLine($"Текущее время: {time}");
+//        Thread.Sleep(1000);
+//    }
+//    catch (Exception ex)
+//    {
+//        Console.WriteLine(ex.Message);
+//    }
+//}
+//while (true)
+//{
+//    var message = Console.ReadLine();
+//    using var tcpClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+//    try
+//    {
+//        await tcpClient.ConnectAsync("192.168.122.139", 8888);
+
+//        byte[] requestData = Encoding.UTF8.GetBytes(message!);
+//        await tcpClient.SendAsync(requestData);
+//    }
+//    catch (Exception ex)
+//    {
+//        Console.WriteLine(ex.Message);
+//    }
+//}
+
 #endregion
 
 #region TCPServer
-var tcpListener = new TcpListener(IPAddress.Parse("192.168.122.139"), 8888);
+//var tcpListener = new TcpListener(IPAddress.Parse("192.168.122.139"), 8888);
+//try
+//{
+//    tcpListener.Start();    // запускаем сервер
+//    Console.WriteLine("Сервер запущен. Ожидание подключений... ");
+//    while (true)
+//    {
+//        using var tcpClient = await tcpListener.AcceptTcpClientAsync();
+//        Console.WriteLine($"Входящее подключение: {tcpClient.Client.RemoteEndPoint}");
+//    }
+//}
+//finally
+//{
+//    tcpListener.Stop();
+//}
+
+//сервер отправки
+//IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse("192.168.122.139"), 8888);
+//using Socket tcpListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+//try
+//{
+//    tcpListener.Bind(ipPoint);
+//    tcpListener.Listen();
+//    Console.WriteLine("Сервер запущен.Ожидание подключений... ");
+//    while (true)
+//    {
+//            using var tcpClient = await tcpListener.AcceptAsync();
+//            byte[] data = Encoding.UTF8.GetBytes(DateTime.Now.ToLongTimeString());
+//            await tcpClient.SendAsync(data);
+//            Console.WriteLine($"Клиенту {tcpClient.RemoteEndPoint} отправлены данные");
+//    }
+//}
+//catch (Exception ex)
+//{
+//    Console.WriteLine(ex.Message);
+//}
+
+
+
+//сервер получения
+IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse("192.168.122.139"), 8888);
+using Socket tcpListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 try
 {
-    tcpListener.Start();    // запускаем сервер
-    Console.WriteLine("Сервер запущен. Ожидание подключений... ");
+    tcpListener.Bind(ipPoint);
+    tcpListener.Listen();
     while (true)
     {
-        using var tcpClient = await tcpListener.AcceptTcpClientAsync();
-        Console.WriteLine($"Входящее подключение: {tcpClient.Client.RemoteEndPoint}");
+        using var tcpClient = await tcpListener.AcceptAsync();
+        List<byte> response = [];
+        byte[] buffer = new byte[512];
+        int bytes = 0;
+        do
+        {
+            bytes = await tcpClient.ReceiveAsync(buffer);
+            response.AddRange(buffer.Take(bytes));
+        }
+        while (bytes > 0);
+        var responseText = Encoding.UTF8.GetString(response.ToArray());
+        Console.WriteLine(responseText);
     }
 }
-finally
+catch (Exception ex)
 {
-    tcpListener.Stop();
+    Console.WriteLine(ex.Message);
 }
 #endregion

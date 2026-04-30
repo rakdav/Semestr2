@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab13WPF", "Lab13WPF\Lab13W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "net2", "net2\net2.csproj", "{AAE208BC-F41E-4FEE-B10B-76C8A2A9DEDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServer", "ChatServer\ChatServer.csproj", "{A15B4265-13B2-4367-9E92-5896AACC7202}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,10 @@ Global
 		{AAE208BC-F41E-4FEE-B10B-76C8A2A9DEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAE208BC-F41E-4FEE-B10B-76C8A2A9DEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAE208BC-F41E-4FEE-B10B-76C8A2A9DEDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15B4265-13B2-4367-9E92-5896AACC7202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15B4265-13B2-4367-9E92-5896AACC7202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15B4265-13B2-4367-9E92-5896AACC7202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15B4265-13B2-4367-9E92-5896AACC7202}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
