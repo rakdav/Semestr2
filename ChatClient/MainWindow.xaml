@@ -29,5 +29,33 @@
             <TextBox Grid.Row="5" Margin="10 15"/>
             <Button Grid.Row="6" Content="Подключиться" Margin="10 10"/>
         </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0"/>
+            <ScrollViewer>
+                <ListBox Grid.Row="1" Margin="10">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <TextBlock FontSize="18" />
+                                <TextBlock FontSize="16"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Margin="10"/>
+                <Button Grid.Column="1" Content="Отправить" Margin="10"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
