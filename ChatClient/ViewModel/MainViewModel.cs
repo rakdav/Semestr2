@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatClient.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -63,7 +64,18 @@ namespace ChatClient.ViewModel
             Messages = new ObservableCollection<string>();
             tcpClient = new TcpClient();
         }
-
+        private RelayCommand connectCommand;
+        public RelayCommand ConnectCommand
+        {
+            get
+            {
+                return connectCommand ??
+                  (connectCommand = new RelayCommand(obj =>
+                  {
+                     
+                  }));
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
