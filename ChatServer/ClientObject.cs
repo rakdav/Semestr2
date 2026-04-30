@@ -58,5 +58,11 @@ namespace ChatServer
                 server.RemoveConnection(Id);
             }
         }
+        protected internal void Close()
+        {
+            Writer.Close();
+            Reader.Close();
+            client.Close();
+        }
     }
 }
