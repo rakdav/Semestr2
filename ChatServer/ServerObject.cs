@@ -60,5 +60,11 @@ namespace ChatServer
             }
             tcpListener!.Stop();
         }
+        protected internal void RemoveConnection(string id)
+        {
+            ClientObject? client = clients!.FirstOrDefault(c => c.Id == id);
+            if (client != null) clients.Remove(client);
+            client?.Close();
+        }
     }
 }
