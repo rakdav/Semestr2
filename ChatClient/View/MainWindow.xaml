@@ -22,7 +22,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Content="Введите IP адрес" VerticalAlignment="Bottom"/>
-            <TextBox Grid.Row="1" Margin="10 15"/>
+            <TextBox Grid.Row="1" Margin="10 15" Text="{Binding }"/>
             <Label Grid.Row="2" Content="Введите порт" VerticalAlignment="Bottom"/>
             <TextBox Grid.Row="3" Margin="10 15"/>
             <Label Grid.Row="4" Content="Введите имя" VerticalAlignment="Bottom"/>
