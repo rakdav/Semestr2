@@ -40,9 +40,12 @@ namespace Lab14
         }
         private async void GetMessage()
         {
-            var result = await udpServer.ReceiveAsync();
-            string message = Encoding.UTF8.GetString(result.Buffer);
-            speed = int.Parse(message);
+            while (true)
+            {
+                var result = await udpServer.ReceiveAsync();
+                string message = Encoding.UTF8.GetString(result.Buffer);
+                speed = int.Parse(message);
+            }
         }
         private void Draw(double _x1,double _y1,
                           double _x2, double _y2,
@@ -61,6 +64,7 @@ namespace Lab14
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+           
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
@@ -72,29 +76,27 @@ namespace Lab14
             {
                 x4 = x1 += speed;
                 x2 = x3 -= speed;
+                if (x1 == x2) side = 2;
             }
-            else if (side == 2) 
+            else if (side == 2)
             {
                 x4 = x1 -= speed;
                 x2 = x3 += speed;
+                if (x1 >= 100 && x2 <= 500) side = 3;
             }
-            else if (side == 3)
+            if (side == 3)
             {
                 y1 = y2 += speed;
                 y3 = y4 -= speed;
+                if (y2 == y3) side = 4;
             }
-            else if(side==4)
+            else if (side == 4)
             {
                 y1 = y2 -= speed;
                 y3 = y4 += speed;
+                if (y1 >= 100 && y3 <= 500) side = 1;
             }
-            if (x1 == x2) side = 2;
-            else 
-            if (x1 == 100 && x2 == 500) side = 3;
-            else
-            if(y1==y4) side=4;
-            else
-            if ((y1 == 100 && y4 == 500)&& (x1 == 100 && x2 == 500)) side = 1;
+
             Draw(x1, y1, x2, y2, x3, y3, x4, y4);
         }
 
