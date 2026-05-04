@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Sockets;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -27,11 +28,21 @@ namespace Lab14
         private double y4 = 500;
         private DispatcherTimer timer;
         private int side = 1;
+        private UdpClient udpServer;
+        private int speed = 10;
         public MainWindow()
         {
             InitializeComponent();
             timer=new DispatcherTimer();
             Draw(x1, y1, x2, y2, x3, y3, x4, y4);
+            udpServer = new UdpClient(5555);
+            GetMessage();
+        }
+        private async void GetMessage()
+        {
+            var result = await udpServer.ReceiveAsync();
+            string message = Encoding.UTF8.GetString(result.Buffer);
+            speed = int.Parse(message);
         }
         private void Draw(double _x1,double _y1,
                           double _x2, double _y2,
@@ -59,19 +70,37 @@ namespace Lab14
         {
             if (side == 1)
             {
-                x4 = x1 += 10;
-                x2 = x3 -= 10;
+                x4 = x1 += speed;
+                x2 = x3 -= speed;
             }
             else if (side == 2) 
             {
-                x4 = x1 -= 10;
-                x2 = x3 += 10;
+                x4 = x1 -= speed;
+                x2 = x3 += speed;
             }
-            if(x1==x2) side=2;
-            if(x1==100&&x2==500) side=3;
+            else if (side == 3)
+            {
+                y1 = y2 += speed;
+                y3 = y4 -= speed;
+            }
+            else if(side==4)
+            {
+                y1 = y2 -= speed;
+                y3 = y4 += speed;
+            }
+            if (x1 == x2) side = 2;
+            else 
+            if (x1 == 100 && x2 == 500) side = 3;
+            else
             if(y1==y4) side=4;
-            if (y1 == 100 && y4 == 500) side = 1;
+            else
+            if ((y1 == 100 && y4 == 500)&& (x1 == 100 && x2 == 500)) side = 1;
             Draw(x1, y1, x2, y2, x3, y3, x4, y4);
+        }
+
+        private void canva_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            timer.Stop();
         }
     }
 }
