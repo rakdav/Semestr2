@@ -16,6 +16,7 @@ public partial class Product
     public int Remainder { get; set; }
 
     public string CityProduct { get; set; } = null!;
+    public double Price {  get; set; }
 
     public virtual ICollection<Sdelka> Sdelkas { get; set; } = new List<Sdelka>();
 

@@ -1,4 +1,5 @@
 ﻿using EFProject;
+using Microsoft.EntityFrameworkCore;
 
 using (DbShopContext db=new DbShopContext())
 {
@@ -77,8 +78,79 @@ using (DbShopContext db=new DbShopContext())
     #endregion
 
     #region Delete
-    Client client = db.Clients.FirstOrDefault(p => p.IdClient == 4)!;
-    db.Clients.Remove(client);
-    await db.SaveChangesAsync();
+    //Client client = db.Clients.FirstOrDefault(p => p.IdClient == 4)!;
+    //db.Clients.Remove(client);
+    //await db.SaveChangesAsync();
     #endregion
+
+    #region Select
+    // SELECT * FROM Клиент
+    //List<Client> clients = db.Clients.ToList();
+    //foreach (Client client in clients)
+    //{
+    //Console.WriteLine(client.FirstName+" "+client.SurName+" "+client.LastName+" "+client.Firma+" "+
+    //    client.Email+" "+client.CityClient+" "+client.Phone);
+    //}
+
+    //SELECT Клиент.Фирма FROM Клиент
+    //var firms = db.Clients.Select(p => new {Firma=p.Firma });
+    //foreach (var client in firms)
+    //{
+    //    Console.WriteLine(client.Firma);
+    //}
+
+    //SELECT DISTINCT Клиент.Фирма FROM Клиент
+    //var firmsDist = db.Clients.Select(p => new { Firma = p.Firma }).Distinct();
+    //foreach (var client in firmsDist)
+    //{
+    //    Console.WriteLine(client.Firma);
+    //}
+
+    //SELECT * FROM Сделка WHERE Количество> 20
+    //var clients = db.Sdelkas.Where(p => p.Count > 5);
+    //foreach (var client in clients)
+    //{
+    //    Console.WriteLine(client.DateSale+" "+client.Count);
+    //}
+
+    //SELECT Название, Цена FROM Товар WHERE Цена>= 100 And Цена<=1500
+    //var sdelkas = db.Products.Where(p => p.Price > 100 && p.Price < 1500);
+    //foreach (var client in sdelkas)
+    //{
+    //    Console.WriteLine(client.NameProduct + " " + client.Price);
+    //}
+
+    //SELECT Фамилия, ГородКлиента FROM Клиент WHERE ГородКлиента = "South Keely" Or ГородКлиента = "Effertzshire"
+    //var sdelkas = db.Clients.Where(p => p.CityClient== "South Keely"||p.CityClient== "Effertzshire");
+    //foreach (var client in sdelkas)
+    //{
+    //    Console.WriteLine(client.Firma + " " + client.FirstName+" "+client.CityClient);
+    //}
+
+    //SELECT Клиент.Фамилия, Клиент.Телефон FROM Клиент WHERE Клиент.Телефон LIKE '_-%'
+    //var clients = db.Clients.Where(p => EF.Functions.Like(p.Phone,"_-%"));
+    //foreach (var client in clients)
+    //{
+    //    Console.WriteLine(client.Firma + " " + client.FirstName + " " + client.CityClient);
+    //}
+    //SELECT Клиент.Фамилия, Клиент.Телефон FROM Клиент WHERE Клиент.Телефон LIKE '_[2,4]%'
+    //var clients = db.Clients.Where(p => EF.Functions.Like(p.Phone, "_-%")|| EF.Functions.Like(p.Phone, "_5%"));
+    //foreach (var client in clients)
+    //{
+    //    Console.WriteLine(client.Firma + " " + client.FirstName + " " + client.CityClient);
+    //}
+    //SELECT Клиент.Фамилия FROM Клиен WHERE Клиент.Фамилия LIKE "%ро%"
+    //var clients = db.Clients.Where(p => p.FirstName.Contains("gu"));
+    //foreach (var client in clients)
+    //{
+    //    Console.WriteLine(client.Firma + " " + client.FirstName + " " + client.CityClient);
+    //}
+    //SELECT Фамилия, Телефон FROM Клиенn WHERE Телефон IS NULL
+    var clients = db.Clients.Where(p => p.Phone!=null);
+    foreach (var client in clients)
+    {
+        Console.WriteLine(client.Firma + " " + client.FirstName + " " + client.CityClient);
+    }
+    #endregion
+
 }
